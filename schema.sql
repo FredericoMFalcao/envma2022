@@ -54,7 +54,7 @@ CREATE TABLE ApostasJogos (
     GolosEqFora INT
 
 );
-ALTER TABLE ApostasJogos ADD CONSTRAINT UmBoostPorFase CHECK ( NOT Boost OR NOT (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1))
+ALTER TABLE ApostasJogos ADD CONSTRAINT UmBoostPorFase CHECK ( NOT Boost OR NOT (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1));
 
 CREATE TABLE ApostasPodio (
     Campeonato VARCHAR(255) REFERENCES Campeonatos (Nome),
