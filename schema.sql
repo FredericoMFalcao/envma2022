@@ -11,7 +11,7 @@ CREATE TABLE Utilizadores (
     NomeLongo          VARCHAR(255) NOT NULL,
     FraseEpica         VARCHAR(1024) NULL,
     Token              VARCHAR(32) DEFAULT MD5(RAND()),
-    LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/?loginID=",Token)) VIRTUAL,
+    LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/setCookie.php?loginID=",Token)) VIRTUAL,
     PRIMARY KEY (NomeCurto)
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE ApostasJogos (
     GolosEqFora INT
 
 );
-ALTER TABLE ApostasJogos ADD CONSTRAINT UmBoostPorFase CHECK ( NOT Boost OR NOT (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1));
+-- ALTER TABLE ApostasJogos ADD CONSTRAINT UmBoostPorFase CHECK ( NOT Boost OR NOT (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1));
 
 CREATE TABLE ApostasPodio (
     Campeonato VARCHAR(255) REFERENCES Campeonatos (Nome),
