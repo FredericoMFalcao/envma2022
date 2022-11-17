@@ -1,29 +1,30 @@
 <form action="/" method="POST">
-	Primeiro Classificado: 
-	<select>
+    <br/>Primeiro Classificado: 
+	<br/><select>
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
-	Segundo Classificado: 
-	<select>
+    <br/>Segundo Classificado: 
+    <br/><select>
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
-	Terceiro Classificado: 
-	<select>
+    <br/>Terceiro Classificado: 
+    <br/><select>
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
-	Quarto Classificado: 
-	<select>
+    <br/>Quarto Classificado: 
+    <br/><select>
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
-	Melhor Marcador: <input type="text" name="MelhorMarcador">
+    <br/>Melhor Marcador: 
+	<br/><input type="text" name="MelhorMarcador">
 	
-	<input type="submit">
+    <br/><input type="submit">
 </form>
