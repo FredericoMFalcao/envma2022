@@ -32,5 +32,6 @@ $currentUser = "xxx";
 
 
 // 3. HANDLE FILE UPLOADS (memes)
+print_r($_FILES);
 if(isset($_FILES["meme"]) && isset($_FILES["meme"]["tmp_name"])) 
 	move_uploaded_file($_FILES["meme"]["tmp_name"], __DIR__."/uploads/$currentUser.jpg");
