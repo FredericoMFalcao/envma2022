@@ -1,5 +1,5 @@
 <?php 
-if (isset($_GET['id']))
+if (isset($_GET['loginID']))
 {
         $days = 360;
         $expire=time()+60*60*24*$days;
