@@ -6,8 +6,9 @@
 <body>
 	
 	<h1>ENVMA 2022</h1>
-	<?php foreach(select(["FraseEpica"], "Utilizadores","LIMIT 1") as $row): extract($row); ?>
-		<img src="/uploads/<?=$NomeCurto?>.jpg" width="200" />
+	<?php foreach(select(["NomeLongo","FraseEpica"], "Utilizadores","LIMIT 1") as $row): extract($row); ?>
+		<h3><?=$FraseEpica?></h3>
+		<h5><?=$NomeLong?></h5>
 	<?php endforeach; ?>
 	
 	<hr/>
