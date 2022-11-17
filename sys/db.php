@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."../_implementation.php";
+require_once __DIR__."/../_implementation.php";
 	
 $db = new PDO('mysql:dbname='.$DB_NAME.';host='.$DB_HOST, $DB_USER_NAME, $DB_PASSWORD);
 
