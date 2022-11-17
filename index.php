@@ -7,6 +7,15 @@
 	
 	<h1>ENVMA 2022</h1>
 	
+	<table>
+		<tbody>
+	<?php foreach(select(["NomeCurto", "NomeLongo"], "Utilizadores") as $row): extract($row); ?>
+	<tr>
+		<td><?=$NomeCurto?></td><td><?=$NomeLongo?></td>
+	</tr>
+	<?php endforeach; ?>
+	</tbody>
+	</table>
 	<hr/>
 	
 	<h2>Memes</h2>
