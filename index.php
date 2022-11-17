@@ -1,1 +1,1 @@
-<?php require_once "frontpage.php";
+<?php require_once "frontPage.php";
