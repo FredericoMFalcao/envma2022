@@ -91,12 +91,12 @@ FROM Jogos AS a
 INNER JOIN ApostasJogos AS b ON a.JogoId = b.JogoId
 ;
 
-CREATE VIEW ApostasPodioComPontosCalculados AS
-SELECT
-	b.Utilizador
-FROM
-
-
+# CREATE VIEW ApostasPodioComPontosCalculados AS
+# SELECT
+# 	b.Utilizador
+# FROM
+# 
+# 
 CREATE VIEW Ranking AS
 SELECT Utilizador, SUM(Pontos) 
 FROM ApostasJogosComPontosCalculados
