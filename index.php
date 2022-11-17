@@ -14,13 +14,13 @@
 	<hr/>
 	
 	<h2>Memes</h2>
-	Faz upload do teu meme pessoal aqui:
+	Faz upload do teu meme pessoal aqui:<br/>
 	<form action="/" method="POST" enctype="multipart/form-data">
 		<input type="file" name="meme" id="meme">
 		<input type="submit">
 	</form>
 
-	<?php foreach(select(["NomeCurto"], "Ranking","LIMIT 3") as $row): extract($row); ?>
+	<?php foreach(select(["NomeCurto"], "Utilizadores","LIMIT 3") as $row): extract($row); ?>
 		<img src="/uploads/<?=$NomeCurto?>.jpg" width="200" />
 	<?php endforeach; ?>
 
