@@ -11,7 +11,7 @@ CREATE TABLE Utilizadores (
     NomeLongo          VARCHAR(255) NOT NULL,
     FraseEpica         VARCHAR(1024) NULL,
     Token              VARCHAR(32) DEFAULT MD5(RAND()),
-    LoginUrl           VARCHAR(255) AS (CONCAT("http://www.sapo.pt?",Token)) VIRTUAL,
+    LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/?loginID=",Token)) VIRTUAL,
     PRIMARY KEY (NomeCurto)
 );
 
