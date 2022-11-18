@@ -7,7 +7,7 @@
     <br/>Primeiro Classificado: 
 	<br/><select name="PrimeiroClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
-			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$PrimeiroClassificado?"selected":""?>><?=$NomeLongo?></option>
+			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$apostaActual["PrimeiroClassificado"]?"selected":""?>><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Segundo Classificado: 
@@ -29,7 +29,7 @@
 		<?php endforeach; ?>
 	</select>
     <br/>Melhor Marcador: 
-	<br/><input type="text" name="MelhorMarcador" value="<?=$MelhorMarcador?>">
+	<br/><input type="text" name="MelhorMarcador" value="<?=$apostaActual["MelhorMarcador"]?>">
 	
     <br/><input type="submit">
 </form>
