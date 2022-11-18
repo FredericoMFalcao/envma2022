@@ -13,19 +13,19 @@
     <br/>Segundo Classificado: 
     <br/><select name="SegundoClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
-			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
+			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$apostaActual["SegundoClassificado"]?"selected":""?>><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Terceiro Classificado: 
     <br/><select name="TerceiroClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
-			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
+			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$apostaActual["TerceiroClassificado"]?"selected":""?>><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Quarto Classificado: 
     <br/><select name="QuartoClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
-			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
+			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$apostaActual["QuartoClassificado"]?"selected":""?>><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Melhor Marcador: 
@@ -39,6 +39,17 @@
 <?php if ($campeonato["Estado"] == "Iniciado") : ?>
 
 <table>
+	<thead>
+		<tr>
+			<th>Utilizador</th>
+			<th>Primero Classificado</th>
+			<th>Segundo Classificado</th>
+			<th>Terceiro Classificado</th>
+			<th>Quarto Classificado</th>
+			<th>Melhor Marcador</th>
+		</tr>
+	</thead>
+	<tbody>
 	<?php foreach(select(["Utilizador","PrimeiroClassificado","SegundoClassificado","TerceiroClassificado","QuartoClassificado","MelhorMarcador"],"ApostasPodio") as $row): extract($row); ?>
 		<tr>
 			<td><?=$Utilizador?></td>
@@ -49,6 +60,7 @@
 			<td><?=$MelhorMarcador?></td>
 		</tr>
 	<?php endforeach; ?>
+	</tbody>
 </table>
 
 <?php endif; ?>
