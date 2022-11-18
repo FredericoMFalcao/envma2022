@@ -32,7 +32,7 @@
     <br/><input type="submit">
 </form>
 
-<?php endif;?>
+<?php endif; ?>
 
 <?php if ($campeonato["Estado"] == "Iniciado") : ?>
 
@@ -46,6 +46,7 @@
 			<td><?=$QuartoClassificado?></td>
 			<td><?=$MelhorMarcador?></td>
 		</tr>
+	<?php endforeach; ?>
 </table>
 
-<?php endif;?>
+<?php endif; ?>
