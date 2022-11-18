@@ -26,7 +26,7 @@ function insert($cols, $tblName) {
 function update(array $cols, string $tblName, array $where) {
 	global $db;
 	escapeStrings($cols);
-	$stmt = $db->prepare("UPDATE $tblName ".
+	$stmt = $db->prepare("UPDATE $tblName SET ".
 		implode(", ",
 			array_map(
 				function($name,$value){return "$name = $value";},
