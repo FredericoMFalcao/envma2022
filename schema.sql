@@ -32,6 +32,7 @@ CREATE TABLE Campeonatos (
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     MelhorMarcador       VARCHAR(255) NULL,
+	Estado               ENUM('EmPreparacao','Iniciado','Finalizado'),
     PRIMARY KEY (Nome)
 );
 

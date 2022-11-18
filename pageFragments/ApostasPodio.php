@@ -1,3 +1,5 @@
+<?php if ($campeonato["Estado"] == "EmPreparacao") : ?>
+
 <form action="/" method="POST">
 	<input type="hidden" name="_table" value="ApostasPodio" />
     <br/>Primeiro Classificado: 
@@ -29,3 +31,21 @@
 	
     <br/><input type="submit">
 </form>
+
+<?php endif;?>
+
+<?php if ($campeonato["Estado"] == "Iniciado") : ?>
+
+<table>
+	<?php foreach(select(["Utilizador","PrimeiroClassificado","SegundoClassificado","TerceiroClassificado","QuartoClassificado","MelhorMarcador"],"ApostasPodio") as $row): extract($row); ?>
+		<tr>
+			<td><?=$Utilizador?></td>
+			<td><?=$PrimeiroClassificado?></td>
+			<td><?=$SegundoClassificado?></td>
+			<td><?=$TerceiroClassificado?></td>
+			<td><?=$QuartoClassificado?></td>
+			<td><?=$MelhorMarcador?></td>
+		</tr>
+</table>
+
+<?php endif;?>

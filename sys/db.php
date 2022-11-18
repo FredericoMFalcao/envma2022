@@ -55,6 +55,8 @@ require_once __DIR__."/../_implementation.php";
 // 1.2. Connect to Database
 $db = new PDO('mysql:dbname='.$DB_NAME.';host='.$DB_HOST, $DB_USER_NAME, $DB_PASSWORD);
 
+
+
 // 1.3. HANDLE LOGIN
 if (!isset($_COOKIE["loginID"])) die("No login id token provided.");
 $queryResults = select(["Utilizador","FraseEpica","NomeLongo"], "Utilizadores","WHERE Token = '{$_COOKIE["loginID"]}'");
@@ -62,10 +64,10 @@ if (empty($queryResults)) die("Login token not found.");
 $currentUser = $queryResults[0]["Utilizador"];
 $currentUserData = $queryResults[0];
 
+// 1.4 PRE-LOAD CHAMPIONSHIP
+$campeonato = select(["Nome"], "Campeonatos")[0]; 
 
-
-
-// 1.4. HANDLE FILE UPLOADS
+// 1.5. HANDLE FILE UPLOADS
 if (!empty($_FILES)) {
 
 	// Handle meme uploads
@@ -74,7 +76,7 @@ if (!empty($_FILES)) {
 	
 }
 
-// 1.5. HANDLE DATA UPLOAD
+// 1.6. HANDLE DATA UPLOAD
 if (!empty($_POST)) {
 	if (isset($_POST["_table"])) {
 		// Extract table name
