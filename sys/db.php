@@ -57,9 +57,10 @@ $db = new PDO('mysql:dbname='.$DB_NAME.';host='.$DB_HOST, $DB_USER_NAME, $DB_PAS
 
 // 1.3. HANDLE LOGIN
 if (!isset($_COOKIE["loginID"])) die("No login id token provided.");
-$queryResults = select(["Utilizador"], "Utilizadores","WHERE Token = '{$_COOKIE["loginID"]}'");
+$queryResults = select(["Utilizador","FraseEpica","NomeLongo"], "Utilizadores","WHERE Token = '{$_COOKIE["loginID"]}'");
 if (empty($queryResults)) die("Login token not found.");
 $currentUser = $queryResults[0]["Utilizador"];
+$currentUserData = $queryResults[0];
 
 
 

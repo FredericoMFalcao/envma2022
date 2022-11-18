@@ -6,6 +6,7 @@
 <body>
 	
 	<h1>ENVMA 2022</h1>
+	<h5>Benvindo <?=$currentUserData["NomeLongo"]?></h5>
 	<?php require __DIR__."/pageFragments/FraseEpica.php"; ?>
 	
 	<hr/>
