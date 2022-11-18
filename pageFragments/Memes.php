@@ -4,7 +4,7 @@
 		<br/><input type="submit">
 	</form>
 
-	<?php foreach(select(["NomeCurto"], "Utilizadores","LIMIT 3") as $row): extract($row); ?>
+	<?php foreach(select(["Utilizador"], "Utilizadores","LIMIT 3") as $row): extract($row); ?>
 		<img src="/uploads/<?=$NomeCurto?>.jpg" width="400" />
 	<?php endforeach; ?>
 
