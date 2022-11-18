@@ -1,11 +1,13 @@
 <?php if ($campeonato["Estado"] == "EmPreparacao") : ?>
 
+<?php $apostaActual = select(["PrimeiroClassificado","SegundoClassificado","TerceiroClassificado","QuartoClassificado","MelhorMarcador"],"ApostasPodio","WHERE Utilizador = '$currentUser'")[0]; ?>
+
 <form action="/" method="POST">
 	<input type="hidden" name="_table" value="ApostasPodio" />
     <br/>Primeiro Classificado: 
 	<br/><select name="PrimeiroClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
-			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
+			<option value="<?=$NomeCurto?>" <?=$NomeCurto==$PrimeiroClassificado?"selected":""?>><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Segundo Classificado: 
@@ -27,7 +29,7 @@
 		<?php endforeach; ?>
 	</select>
     <br/>Melhor Marcador: 
-	<br/><input type="text" name="MelhorMarcador">
+	<br/><input type="text" name="MelhorMarcador" value="<?=$MelhorMarcador?>">
 	
     <br/><input type="submit">
 </form>
