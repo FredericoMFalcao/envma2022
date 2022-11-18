@@ -9,6 +9,7 @@ function escapeStrings(&$array) {
 	foreach($array as $k=>$v)
 		if (is_string($v))
 			$array[$k] = "'".str_replace("'","''", $v)."'";
+	return $array;
 }
 function select($cols, $tblName, $extra = "") {
 	global $db;
@@ -22,7 +23,7 @@ function insert($cols, $tblName) {
 	
 	return $stmt->execute();
 }
-function update($cols, $tblName, $where) {
+function update(array $cols, string $tblName, array $where) {
 	global $db;
 	escapeStrings($cols);
 	$stmt = $db->prepare("UPDATE $tblName ".
