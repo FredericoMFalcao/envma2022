@@ -21,10 +21,12 @@
 	<hr/>
 	
 	<h2>Apostas Jogos</h2>
+	<?php require __DIR__."/pageFragments/ApostasJogos.php"; ?>
 
 	<hr/>
 	
 	<h2>Ranking</h2>
+	<?php require __DIR__."/pageFragments/Ranking.php"; ?>
 	
 </body>
 </html>

@@ -1,24 +1,25 @@
 <form action="/" method="POST">
+	<input type="hidden" name="_table" value="ApostasPodio" />
     <br/>Primeiro Classificado: 
-	<br/><select>
+	<br/><select name="PrimeiroClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Segundo Classificado: 
-    <br/><select>
+    <br/><select name="SegundoClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Terceiro Classificado: 
-    <br/><select>
+    <br/><select name="TerceiroClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>
 	</select>
     <br/>Quarto Classificado: 
-    <br/><select>
+    <br/><select name="QuartoClassificado">
 		<?php foreach(select(["NomeCurto","NomeLongo"],"Equipas") as $row): extract($row); ?>
 			<option value="<?=$NomeCurto?>"><?=$NomeLongo?></option>
 		<?php endforeach; ?>

@@ -7,13 +7,15 @@
 #   1.1. SOCIAL
 ###################
 CREATE TABLE Utilizadores (
-    NomeCurto          CHAR(3) NOT NULL,
+    Utilizador         CHAR(3) NOT NULL,
     NomeLongo          VARCHAR(255) NOT NULL,
     FraseEpica         VARCHAR(1024) NULL,
     Token              VARCHAR(32) DEFAULT MD5(RAND()),
     LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/setCookie.php?loginID=",Token)) VIRTUAL,
-    PRIMARY KEY (NomeCurto)
+    PRIMARY KEY (Utilizador)
 );
+CREATE TRIGGER AutoCriarApostasPodioVazias AFTER INSERT ON Utilizadores FOR EACH ROW AutoCriarApostasPodioVaziasParaUtilizador(Utilizador);
+CREATE TRIGGER AutoCriarApostasJogosVazias AFTER INSERT ON Utilizadores FOR EACH ROW AutoCriarApostasJogosVaziasParaUtilizador(Utilizador);
 
 #   1.2. DESPORTO
 ###################
@@ -46,18 +48,24 @@ CREATE TABLE Jogos (
 #   1.3. APOSTAS
 ###################
 CREATE TABLE ApostasJogos (
-    Utilizador  CHAR(3) REFERENCES Utilizadores (NomeCurto),
+    Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
     JogoId      INT REFERENCES Jogos (JogoId),
 	Fase        ENUM('Grupos','Eliminatoria'),
     Boost       INT DEFAULT (0),
-    GolosEqCasa INT,
-    GolosEqFora INT
-
+    GolosEqCasa INT NULL,
+    GolosEqFora INT NULL
 );
--- ALTER TABLE ApostasJogos ADD CONSTRAINT UmBoostPorFase CHECK ( NOT Boost OR NOT (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1));
+CREATE TABLE ApostasBoosts (
+    Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
+	Fase        ENUM('Grupos','Eliminatoria'),
+	JogoId      INT REFERENCES Jogos (JogoId),
+	-- Apenas UM boost por utilizador / fase
+	CONSTRAINT UNIQUE (Utilizador, Fase)
+);
 
 CREATE TABLE ApostasPodio (
     Campeonato VARCHAR(255) REFERENCES Campeonatos (Nome),
+    Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
     PrimeiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     SegundoClassificado  CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
@@ -111,7 +119,11 @@ ORDER BY SUM(Pontos) DESC
 #
 ################################
 
-CREATE FUNCTION BoostJaUsadosParaUtilizadorEFase(_Utilizador CHAR(3), _Fase INT) RETURNS INT DETERMINISTIC
-RETURN (SELECT COUNT(*) FROM ApostasJogos WHERE Utilizador = _Utilizador AND _Fase = _Fase AND Boost = 1);
+CREATE PROCEDURE AutoCriarApostasPodioVaziasParaUtilizador( IN _Utilizador TEXT)
+ INSERT INTO ApostasPodio (Campeonato, Utilizador,PrimeiroClassificado,SegundoClassificado ,TerceiroClassificado,QuartoClassificado,MelhorMarcador)
+ VALUES("Euro2022", _Utilizador, NULL, NULL, NULL, NULL, NULL);
 
+CREATE PROCEDURE AutoCriarApostasJogosVaziasParaUtilizador( IN _Utilizador TEXT)
+  INSERT INTO ApostasJogos (Campeonato, Utilizador,PrimeiroClassificado,SegundoClassificado ,TerceiroClassificado,QuartoClassificado,MelhorMarcador)
+  SELECT "Euro2022", _Utilizador, NULL, NULL, NULL, NULL, NULL FROM Jogos;
 
