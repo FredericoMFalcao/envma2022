@@ -33,7 +33,9 @@ function update($cols, $tblName, $where) {
 				array_values($cols)
 			)
 		)
-	." WHERE 1");
+	." WHERE "
+	.implode(" AND ",array_map(function($name, $value){return "$name = $value";},escapeStrings($where)))
+	);
 	
 	return $stmt->execute();
 }
