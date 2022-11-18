@@ -3,7 +3,7 @@ if (isset($_GET['loginID']))
 {
         $days = 360;
         $expire=time()+60*60*24*$days;
-        setcookie("loginID", $_GET['id'], $expire,"/");
+        setcookie("loginID", $_GET['loginID'], $expire,"/");
 }
 else
 {
