@@ -56,8 +56,8 @@ require_once __DIR__."/../_implementation.php";
 $db = new PDO('mysql:dbname='.$DB_NAME.';host='.$DB_HOST, $DB_USER_NAME, $DB_PASSWORD);
 
 // 1.3. HANDLE LOGIN
-if (!isset($_COOKIES["loginID"])) die("No login id token provided.");
-$queryResults = select(["Utilizador"], "Utilizadores","Token = '{$_COOKIES["loginID"]}'");
+if (!isset($_COOKIE["loginID"])) die("No login id token provided.");
+$queryResults = select(["Utilizador"], "Utilizadores","Token = '{$_COOKIE["loginID"]}'");
 if (empty($queryResults)) die("Login token not found.");
 $currentUser = $queryResults[0]["Utilizador"];
 
