@@ -65,7 +65,7 @@ $currentUser = $queryResults[0]["Utilizador"];
 $currentUserData = $queryResults[0];
 
 // 1.4 PRE-LOAD CHAMPIONSHIP
-$campeonato = select(["Nome"], "Campeonatos")[0]; 
+$campeonato = select(["Nome","Estado"], "Campeonatos")[0]; 
 
 // 1.5. HANDLE FILE UPLOADS
 if (!empty($_FILES)) {
