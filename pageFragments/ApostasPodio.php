@@ -34,9 +34,7 @@
     <br/><input type="submit">
 </form>
 
-<?php endif; ?>
-
-<?php if ($campeonato["Estado"] == "Iniciado") : ?>
+<?php else : ?>
 
 <table>
 	<thead>
