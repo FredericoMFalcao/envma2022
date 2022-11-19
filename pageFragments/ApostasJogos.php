@@ -42,7 +42,6 @@
 					<?=$ApostaGolosEqCasa?> - <?=$ApostaGolosEqFora?>
 				<?php endif;?>
 				</td>
-				<td><?=$row["GolosEqCasa"]?> - <?=$row["GolosEqFora"]?></td>				
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
