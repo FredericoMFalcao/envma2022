@@ -12,7 +12,7 @@
 	</thead>
 	<tbody>
 		<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>
-			<?php $aposta = select([],"ApostasJogos","WHERE Utilizador = '$currentUser' AND JogoId = {$Jogo["JogoId"]}"); ?>
+			<?php $aposta = select(["Boost","GolosEqCasa","GolosEqFora"],"ApostasJogos","WHERE Utilizador = '$currentUser' AND JogoId = {$Jogo["JogoId"]}"); ?>
 			<tr>
 				<td colspan="2">
 					<form action="/" method="POST">
@@ -20,11 +20,10 @@
 						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
 						<input type="hidden" name="Fase"   value="<?=$Jogo["Fase"]?>">
 						<select name="GolosEqCasa">
-							<?=implode("",array_map(function($o){return "<option>$o</option>";},range(0,9)))?>
-							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+							<?=implode("",array_map(function($o){return "<option ".($aposta["GolosEqCasa"]==$o?"selected":"").">$o</option>";},range(0,9)))?>
 						</select>
 						<select name="GolosEqFora">
-							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+							<?=implode("",array_map(function($o){return "<option ".($aposta["GolosEqFora"]==$o?"selected":"").">$o</option>";},range(0,9)))?>
 						</select>
 						<br/>Boost: <input type="checkbox" name="boost" value="1" <?=$aposta["Boost"]?"checked":""?> />
 						<br/><input type="submit" />
