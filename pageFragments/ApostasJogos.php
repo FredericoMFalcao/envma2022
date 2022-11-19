@@ -22,8 +22,8 @@
 			"b.EquipaFora NomeEquipaFora"
 		],"ApostasJogos a", 
 		 "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogo["JogoId"]} "
-		."INNER JOIN Utilizadores u ON a.Utilizador = u.Utilizador"
-		."GROUP BY a.GolosEqCasa, a.GolosEqFora"
+		."INNER JOIN Utilizadores u ON a.Utilizador = u.Utilizador "
+		."GROUP BY a.GolosEqCasa, a.GolosEqFora "
 		."ORDER BY a.JogoId ASC"
 		) as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
