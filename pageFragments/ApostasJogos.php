@@ -12,7 +12,7 @@
 	</thead>
 	<tbody>
 		<?php foreach(select([
-			"CONCAT_WS(u.NomeLongo,'<br/>') Utilizador",
+			"CONCAT_WS('<br/>', u.NomeLongo) Utilizador",
 			"a.GolosEqCasa ApostaGolosEqCasa",
 			"a.GolosEqFora ApostaGolosEqFora",
 			"b.Estado Estado",
