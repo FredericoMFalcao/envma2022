@@ -43,7 +43,7 @@ CREATE TABLE Jogos (
     GolosEqFora   INT NULL,
     DataHoraUTC   DATETIME NOT NULL,
     Fase          ENUM ('Grupos','Eliminatoria') DEFAULT('Grupos'), 
-	Estado        ENUM('NaoDisputado','EmCurso','Disputado') DEFAULT ('NaoDisputado')
+	Estado        ENUM('ApostasAbertas','ApostasFechadas','Disputado') DEFAULT ('ApostasAbertas')
 );
 
 #   1.3. APOSTAS
