@@ -54,7 +54,8 @@ CREATE TABLE ApostasJogos (
 	Fase        ENUM('Grupos','Eliminatoria'),
     Boost       INT DEFAULT (0),
     GolosEqCasa INT NULL,
-    GolosEqFora INT NULL
+    GolosEqFora INT NULL,
+	PRIMARY KEY (Utilizador, JogoId)
 );
 CREATE TABLE ApostasBoosts (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
@@ -71,7 +72,8 @@ CREATE TABLE ApostasPodio (
     SegundoClassificado  CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
-    MelhorMarcador       VARCHAR(255) NULL    
+    MelhorMarcador       VARCHAR(255) NULL,
+	PRIMARY KEY (Campeonato, Utilizador)
 );
 
 #################################
