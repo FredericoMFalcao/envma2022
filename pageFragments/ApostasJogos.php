@@ -13,7 +13,7 @@
 	<tbody>
 		<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>
 			<tr>
-				<td>
+				<td colspan="2">
 					<form action="/" method="POST">
 						<input type="hidden" name="_table" value="ApostasJogos">
 						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
