@@ -1,10 +1,9 @@
-<?php foreach(select(["JogoId"],"Jogos ORDER BY JogoId ASC") as $Jogos) : ?>
+<?php foreach(select(["JogoId","Equipas.NomeLongo EquipaCasa","Equipas.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas ON Equipas.NomeCurto = EquipaCasa INNER JOIN Equipas ON Equipas.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogos) : ?>
 <table border="1">
 	<thead>
 		<tr>
-			<th>Jogo</th>
-			<th>Utilizador</th>
-			<th>Aposta</th>
+			<th> <?=$EquipaCasa?> vs. <?=$EquipaFora?> </th>
+			<th> <?=$GolosEqCasa?> - <?=$GolosEqFora?> </th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,12 +19,6 @@
 		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogos["JogoId"]} ORDER BY a.JogoId ASC") as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
-				<td>
-					<?=$NomeEquipaCasa?> - <?=$NomeEquipaFora?>
-					<?php if ($Estado == "Disputado") : ?>
-						(<?=$ResultadoEqCasa?> - <?=$ResultadoEqFora?>)
-					<?php endif;?>
-				</td>
 				<td><?=$row["Utilizador"]?></td>
 				<td>
 				<?php if ($Estado == "ApostasAbertas") : ?>				
