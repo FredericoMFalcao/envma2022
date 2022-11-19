@@ -5,6 +5,6 @@
 	</form>
 
 	<?php foreach(select(["Utilizador"], "Utilizadores","LIMIT 3") as $row): extract($row); ?>
-		<img src="/uploads/<?=$NomeCurto?>.jpg" width="400" />
+		<img src="/uploads/<?=$Utilizador?>.jpg" width="400" />
 	<?php endforeach; ?>
 
