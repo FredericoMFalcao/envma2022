@@ -1,4 +1,4 @@
-<?php foreach(select(["JogoId","Equipas.NomeLongo EquipaCasa","Equipas.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas ON Equipas.NomeCurto = EquipaCasa INNER JOIN Equipas ON Equipas.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogos) : ?>
+<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogos) : ?>
 <table border="1">
 	<thead>
 		<tr>
