@@ -1,7 +1,7 @@
 <?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado","Fase"],
 		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
 			) as $Jogo) : ?>
-<h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
+<h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":"( apostas fechadas )"?></h3>
 <h5><?=$Jogo["DataHoraUTC"]?></h5>
 <table border="1">
 	<thead>
@@ -12,6 +12,7 @@
 	</thead>
 	<tbody>
 		<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>
+			<?php $aposta = select([],"ApostasJogos","WHERE Utilizador = '$currentUser' AND JogoId = {$Jogo["JogoId"]}"); ?>
 			<tr>
 				<td colspan="2">
 					<form action="/" method="POST">
@@ -25,7 +26,7 @@
 						<select name="GolosEqFora">
 							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
 						</select>
-						<br/>Boost: <input type="checkbox" name="boost" <?=$Boost?"checked":""?> />
+						<br/>Boost: <input type="checkbox" name="boost" value="1" <?=$aposta["Boost"]?"checked":""?> />
 						<br/><input type="submit" />
 					</form>
 				</td>
