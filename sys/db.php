@@ -53,6 +53,7 @@ function update(array $cols, string $tblName, array $where) {
 // 1.1. Fetch credentials
 require_once __DIR__."/../_implementation.php";	
 // 1.2. Connect to Database
+print_r($_SERVER);die();
 $db = new PDO('mysql:dbname='.(explode(".",$_SERVER["REMOTE_HOST"])[0]).';host='.$DB_HOST, $DB_USER_NAME, $DB_PASSWORD);
 
 
