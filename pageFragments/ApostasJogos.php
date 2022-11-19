@@ -4,7 +4,7 @@
 <table border="1">
 	<thead>
 		<tr>
-			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$DataHoraUTC?></th>
+			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["DataHoraUTC"]?></th>
 			<th> <?=$Jogo["GolosEqCasa"]?> - <?=$Jogo["GolosEqFora"]?> </th>
 		</tr>
 	</thead>
