@@ -29,8 +29,9 @@
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
 				<td>
-				<?php if ($Estado == "ApostasAbertas") : ?>				
+				<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>				
 					<form action="/" method="POST">
+						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
 						<select name="GolosEqCasa">
 							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
 						</select>
