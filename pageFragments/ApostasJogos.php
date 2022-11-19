@@ -1,4 +1,4 @@
-<?php foreach(select(["JogoId"],"Jogos") as $Jogos) : ?>
+<?php foreach(select(["JogoId"],"Jogos ORDER BY JogoId ASC") as $Jogos) : ?>
 <table border="1">
 	<thead>
 		<tr>
