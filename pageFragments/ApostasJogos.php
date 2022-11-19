@@ -16,7 +16,7 @@
 			"b.GolosEqFora ResultadoEqFora",
 			"b.EquipaCasa NomeEquipaCasa",
 			"b.EquipaFora NomeEquipaFora"
-		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogos["JogoId"]} ORDER BY a.JogoId ASC") as $row) : extract($row); ?>
+		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogo["JogoId"]} ORDER BY a.JogoId ASC") as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
 				<td><?=$row["Utilizador"]?></td>
