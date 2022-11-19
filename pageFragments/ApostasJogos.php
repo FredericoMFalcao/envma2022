@@ -1,8 +1,10 @@
-<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogo) : ?>
+<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC"],
+		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
+			) as $Jogo) : ?>
 <table border="1">
 	<thead>
 		<tr>
-			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> </th>
+			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$DataHoraUTC?></th>
 			<th> <?=$Jogo["GolosEqCasa"]?> - <?=$Jogo["GolosEqFora"]?> </th>
 		</tr>
 	</thead>
