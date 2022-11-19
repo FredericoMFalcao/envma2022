@@ -1,3 +1,4 @@
+<?php foreach(select(["JogoId"],"Jogos") as $Jogos) : ?>
 <table border="1">
 	<thead>
 		<tr>
@@ -16,7 +17,7 @@
 			"b.GolosEqFora ResultadoEqFora",
 			"b.EquipaCasa NomeEquipaCasa",
 			"b.EquipaFora NomeEquipaFora"
-		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId") as $row) : extract($row); ?>
+		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogos["JogoId"]} ORDER BY JogoId ASC") as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
 				<td>
@@ -46,3 +47,8 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<?endforeach;?>
+
+
+
+
