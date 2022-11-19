@@ -1,4 +1,4 @@
-<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado"],
+<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado","Fase"],
 		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
 			) as $Jogo) : ?>
 <h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
@@ -11,6 +11,26 @@
 		</tr>
 	</thead>
 	<tbody>
+		<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>
+			<tr>
+				<td>
+					<form action="/" method="POST">
+						<input type="hidden" name="_table" value="ApostasJogos">
+						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
+						<input type="hidden" name="Fase"   value="<?=$Jogo["Fase"]?>">
+						<select name="GolosEqCasa">
+							<?=implode("",array_map(function($o){return "<option>$o</option>";},range(0,9)))?>
+							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+						</select>
+						<select name="GolosEqFora">
+							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+						</select>
+						<br/>Boost: <input type="checkbox" name="boost" <?=$Boost?"checked":""?> />
+						<br/><input type="submit" />
+					</form>
+				</td>
+			</tr>
+		<?php else : ?>
 		<?php foreach(select([
 			"GROUP_CONCAT(u.NomeLongo SEPARATOR '<br/>') Utilizador",
 			"a.GolosEqCasa ApostaGolosEqCasa",
@@ -28,26 +48,11 @@
 		) as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
-				<td>
-				<?php if ($Jogo["Estado"] == "ApostasAbertas") : ?>				
-					<form action="/" method="POST">
-						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
-						<select name="GolosEqCasa">
-							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
-						</select>
-						<select name="GolosEqFora">
-							<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
-						</select>
-						<br/>Boost: <input type="checkbox" name="boost" <?=$Boost?"checked":""?> />
-						<br/><input type="submit" />
-					</form>
-				<?php else : ?>
-					<?=$ApostaGolosEqCasa?> - <?=$ApostaGolosEqFora?>
-				<?php endif;?>
-				</td>
+				<td><?=$ApostaGolosEqCasa?> - <?=$ApostaGolosEqFora?></td>
 				<td><?=$row["Utilizador"]?></td>
 			</tr>
 		<?php endforeach; ?>
+		<?php endif;?>
 	</tbody>
 </table>
 <?php endforeach; ?>

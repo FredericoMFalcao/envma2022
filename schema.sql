@@ -51,7 +51,7 @@ CREATE TABLE Jogos (
 CREATE TABLE ApostasJogos (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
     JogoId      INT REFERENCES Jogos (JogoId),
-	Fase        ENUM('Grupos','Eliminatoria'),
+	Fase        ENUM('Grupos','Eliminatoria') DEFAULT('Grupos'),
     Boost       INT DEFAULT (0),
     GolosEqCasa INT NULL,
     GolosEqFora INT NULL,
