@@ -1,9 +1,9 @@
-<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogos) : ?>
+<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora"],"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC") as $Jogo) : ?>
 <table border="1">
 	<thead>
 		<tr>
-			<th> <?=$EquipaCasa?> vs. <?=$EquipaFora?> </th>
-			<th> <?=$GolosEqCasa?> - <?=$GolosEqFora?> </th>
+			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> </th>
+			<th> <?=$Jogo["GolosEqCasa"]?> - <?=$Jogo["GolosEqFora"]?> </th>
 		</tr>
 	</thead>
 	<tbody>
