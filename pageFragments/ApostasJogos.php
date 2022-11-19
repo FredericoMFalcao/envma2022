@@ -17,7 +17,7 @@
 				<td colspan="2">
 					<form action="/" method="POST">
 						<input type="hidden" name="_table" value="ApostasJogos">
-						<input type="hidden" name="JogoId" value="<?=$Jogo["JogoId"]?>">
+						<input type="hidden" name="_pk_JogoId" value="<?=$Jogo["JogoId"]?>">
 						<input type="hidden" name="Fase"   value="<?=$Jogo["Fase"]?>">
 						<select name="GolosEqCasa">
 							<?=implode("",array_map(function($o){global $aposta;return "<option ".($aposta["GolosEqCasa"]==$o?"selected":"").">$o</option>";},range(0,9)))?>

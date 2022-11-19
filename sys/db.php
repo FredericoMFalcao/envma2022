@@ -81,8 +81,15 @@ if (!empty($_POST)) {
 	if (isset($_POST["_table"])) {
 		// Extract table name
 		$tbl = $_POST["_table"]; unset($_POST["_table"]);
+		$filterArray = ["Utilizador" => $currentUser];
+		foreach($_POST as $key => $value)
+			if (strpos($key,"_pk_") === 0) {
+				unset($_POST[$key]);
+				$filterArray[str_replace("_pk_","",$key)] = $value;
+			}
+				
 		// Update data
-		update($_POST, $tbl, ["Utilizador" => $currentUser]);	
+		update($_POST, $tbl, $filterArray);	
 	}
 	
 }
