@@ -1,16 +1,18 @@
-<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC"],
+<?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado"],
 		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
 			) as $Jogo) : ?>
+<h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
+<h5><?=$Jogo["DataHoraUTC"]?></h5>
 <table border="1">
 	<thead>
 		<tr>
-			<th> <?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["DataHoraUTC"]?></th>
-			<th> <?=$Jogo["GolosEqCasa"]?> - <?=$Jogo["GolosEqFora"]?> </th>
+			<th>Aposta</th>
+			<th>Concorrentes</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php foreach(select([
-			"a.Utilizador Utilizador",
+			"CONCAT_WS(u.NomeLongo,'<br/>') Utilizador",
 			"a.GolosEqCasa ApostaGolosEqCasa",
 			"a.GolosEqFora ApostaGolosEqFora",
 			"b.Estado Estado",
@@ -18,10 +20,14 @@
 			"b.GolosEqFora ResultadoEqFora",
 			"b.EquipaCasa NomeEquipaCasa",
 			"b.EquipaFora NomeEquipaFora"
-		],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogo["JogoId"]} ORDER BY a.JogoId ASC") as $row) : extract($row); ?>
+		],"ApostasJogos a", 
+		 "INNER JOIN Jogos b ON a.JogoId = b.JogoId AND a.JogoId = {$Jogo["JogoId"]} "
+		."INNER JOIN Utilizadores u ON a.Utilizador = u.Utilizador"
+		."GROUP BY a.GolosEqCasa, a.GolosEqFora"
+		."ORDER BY a.JogoId ASC"
+		) as $row) : extract($row); ?>
 			<?php if ($Utilizador != $currentUser && $Estado == "ApostasAbertas") continue; ?>
 			<tr>
-				<td><?=$row["Utilizador"]?></td>
 				<td>
 				<?php if ($Estado == "ApostasAbertas") : ?>				
 					<form action="/" method="POST">
@@ -38,6 +44,7 @@
 					<?=$ApostaGolosEqCasa?> - <?=$ApostaGolosEqFora?>
 				<?php endif;?>
 				</td>
+				<td><?=$row["Utilizador"]?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
