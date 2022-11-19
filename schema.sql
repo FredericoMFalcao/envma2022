@@ -14,8 +14,6 @@ CREATE TABLE Utilizadores (
     LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/setCookie.php?loginID=",Token)) VIRTUAL,
     PRIMARY KEY (Utilizador)
 );
-CREATE TRIGGER AutoCriarApostasPodioVazias AFTER INSERT ON Utilizadores FOR EACH ROW AutoCriarApostasPodioVaziasParaUtilizador(Utilizador);
-CREATE TRIGGER AutoCriarApostasJogosVazias AFTER INSERT ON Utilizadores FOR EACH ROW AutoCriarApostasJogosVaziasParaUtilizador(Utilizador);
 
 #   1.2. DESPORTO
 ###################
@@ -35,6 +33,7 @@ CREATE TABLE Campeonatos (
 	Estado               ENUM('EmPreparacao','Iniciado','Finalizado') DEFAULT ('EmPreparacao'),
     PRIMARY KEY (Nome)
 );
+INSERT INTO Campeonatos (Nome,Estado) VALUES ("CampeonatoMundo2022","EmPreparacao");
 
 CREATE TABLE Jogos (
     JogoId        INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,8 +41,8 @@ CREATE TABLE Jogos (
     EquipaFora    CHAR(3) REFERENCES Equipas (NomeCurto),
     GolosEqCasa   INT NULL,
     GolosEqFora   INT NULL,
-    DataHoraUTC   DATE NOT NULL,
-    Fase          ENUM ('Grupos','Eliminatoria'),
+    DataHoraUTC   DATETIME NOT NULL,
+    Fase          ENUM ('Grupos','Eliminatoria') DEFAULT('Grupos'), 
 	Estado        ENUM('NaoDisputado','EmCurso','Disputado') DEFAULT ('NaoDisputado')
 );
 
@@ -123,9 +122,11 @@ ORDER BY SUM(Pontos) DESC
 
 CREATE PROCEDURE AutoCriarApostasPodioVaziasParaUtilizador( IN _Utilizador TEXT)
  INSERT INTO ApostasPodio (Campeonato, Utilizador,PrimeiroClassificado,SegundoClassificado ,TerceiroClassificado,QuartoClassificado,MelhorMarcador)
- VALUES("Euro2022", _Utilizador, NULL, NULL, NULL, NULL, NULL);
+ VALUES("CampeonatoMundo2022", _Utilizador, NULL, NULL, NULL, NULL, NULL);
 
 CREATE PROCEDURE AutoCriarApostasJogosVaziasParaUtilizador( IN _Utilizador TEXT)
-  INSERT INTO ApostasJogos (Campeonato, Utilizador,PrimeiroClassificado,SegundoClassificado ,TerceiroClassificado,QuartoClassificado,MelhorMarcador)
-  SELECT "Euro2022", _Utilizador, NULL, NULL, NULL, NULL, NULL FROM Jogos;
+  INSERT INTO ApostasJogos (Utilizador,JogoId,Fase)
+  SELECT _Utilizador, JogoId, Fase FROM Jogos;
 
+CREATE TRIGGER AutoCriarApostasPodioVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasPodioVaziasParaUtilizador(NEW.Utilizador);
+CREATE TRIGGER AutoCriarApostasJogosVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasJogosVaziasParaUtilizador(NEW.Utilizador);
