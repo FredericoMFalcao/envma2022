@@ -4,7 +4,14 @@
 		<br/><input type="submit">
 	</form>
 
-	<?php foreach(select(["Utilizador"], "Utilizadores","LIMIT 3") as $row): extract($row); ?>
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","LIMIT 1 ORDER BY Pontos DESC") as $row): extract($row); ?>
 		<img src="/uploads/<?=$Utilizador?>.jpg" width="400" />
 	<?php endforeach; ?>
 
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","LIMIT 1 ORDER BY Pontos ASC") as $row): extract($row); ?>
+		<img src="/uploads/<?=$Utilizador?>.jpg" width="400" />
+	<?php endforeach; ?>
+
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","LIMIT 1 ORDER BY RAND() ASC") as $row): extract($row); ?>
+		<img src="/uploads/<?=$Utilizador?>.jpg" width="400" />
+	<?php endforeach; ?>

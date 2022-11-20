@@ -110,7 +110,7 @@ INNER JOIN ApostasJogos AS b ON a.JogoId = b.JogoId
 # 
 DROP VIEW IF EXISTS Ranking;
 CREATE VIEW Ranking AS
-SELECT b.NomeLongo Utilizador, SUM(a.Pontos) as Pontos
+SELECT a.Utilizador UtilizadorNomeCurto, b.NomeLongo Utilizador, SUM(a.Pontos) as Pontos
 FROM ApostasJogosComPontosCalculados a
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
 GROUP BY a.Utilizador
