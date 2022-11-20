@@ -6,7 +6,7 @@
 		</tr>
 	</thead>
 <tbody>
-	<?php foreach(sql(["Utilizador","Pontos"],"ApostasJogosComPontosCalculados") as $row) : extract($row); ?>
+	<?php foreach(select(["Utilizador","Pontos"],"ApostasJogosComPontosCalculados") as $row) : extract($row); ?>
 		<tr>
 			<td><?=$Utilizador?></td>
 			<td><?=$Pontos?></td>
