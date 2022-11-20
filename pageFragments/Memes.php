@@ -8,7 +8,7 @@
 		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" />
 	<?php endforeach; ?>
 
-	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos ASC, Utilizador DESC LIMIT 1") as $row): extract($row); ?>
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos ASC, Utilizador ASC LIMIT 1") as $row): extract($row); ?>
 		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" />
 	<?php endforeach; ?>
 
