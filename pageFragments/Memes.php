@@ -4,11 +4,11 @@
 		<br/><input type="submit">
 	</form>
 
-	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos DESC LIMIT 1") as $row): extract($row); ?>
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos DESC, Utiliazador DESC LIMIT 1") as $row): extract($row); ?>
 		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" />
 	<?php endforeach; ?>
 
-	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos ASC LIMIT 1") as $row): extract($row); ?>
+	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos ASC, Utiliazador DESC LIMIT 1") as $row): extract($row); ?>
 		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" />
 	<?php endforeach; ?>
 
