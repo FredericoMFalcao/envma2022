@@ -87,7 +87,10 @@ if (!empty($_POST)) {
 				unset($_POST[$key]);
 				$filterArray[str_replace("_pk_","",$key)] = $value;
 			}
-				
+		
+		// Hotfix: 
+		if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = 0;
+		
 		// Update data
 		update($_POST, $tbl, $filterArray);	
 	}
