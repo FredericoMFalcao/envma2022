@@ -25,7 +25,7 @@
 						<select name="GolosEqFora">
 							<?=implode("",array_map(function($o){global $aposta;return "<option ".($aposta["GolosEqFora"]==$o?"selected":"").">$o</option>";},range(0,9)))?>
 						</select>
-						<br/>Boost: <input type="checkbox" name="boost" value="1" <?=isset($aposta["Boost"])&&$aposta["Boost"]==1?"checked":""?> />
+						<br/>Boost: <input type="checkbox" name="Boost" value="1" <?=isset($aposta["Boost"])&&$aposta["Boost"]==1?"checked":""?> />
 						<br/><input type="submit" />
 					</form>
 				</td>
