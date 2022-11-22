@@ -82,13 +82,14 @@ CREATE TABLE ApostasPodio (
 #   2. VIEWS / FORMULAS / CALCULOS
 #
 ################################
+DROP VIEW IF EXISTS ApostasJogosComPontosCalculados;
 CREATE VIEW ApostasJogosComPontosCalculados AS
 SELECT
     b.Utilizador,
     b.JogoId,
-    (CASE WHEN a.GolosEqCasa = b.GolosEqCasa THEN 1 + 1 * b.Boost ELSE 0 END)
+    (CASE WHEN a.GolosEqCasa = b.GolosEqCasa THEN 1 + 1 * (CASE WHEN b.Boost IS NULL THEN 0 ELSE b.Boost END) ELSE 0 END)
     +
-    (CASE WHEN a.GolosEqFora = b.GolosEqFora THEN 1 + 1 * b.Boost ELSE 0 END)
+    (CASE WHEN a.GolosEqFora = b.GolosEqFora THEN 1 + 1 * (CASE WHEN b.Boost IS NULL THEN 0 ELSE b.Boost END) ELSE 0 END)
     +
     (CASE WHEN 
         a.GolosEqCasa > a.GolosEqFora AND b.GolosEqCasa > b.GolosEqFora
@@ -96,7 +97,7 @@ SELECT
         a.GolosEqCasa = a.GolosEqFora AND b.GolosEqCasa = b.GolosEqFora
         OR
         a.GolosEqCasa < a.GolosEqFora AND b.GolosEqCasa < b.GolosEqFora
-        THEN 3 + 3 * b.Boost ELSE 0 END
+        THEN 3 + 3 * (CASE WHEN b.Boost IS NULL THEN 0 ELSE b.Boost END) ELSE 0 END
     )
     AS Pontos
 FROM Jogos AS a
