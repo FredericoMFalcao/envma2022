@@ -32,7 +32,7 @@
 			</tr>
 		<?php else : ?>
 		<?php foreach(select([
-			"GROUP_CONCAT(u.NomeLongo SEPARATOR '<br/>') Utilizador",
+			"GROUP_CONCAT((CASE WHEN Boost = 1 THEN CONCAT(u.NomeLongo, \" (b)\") ELSE u.NomeLongo END) SEPARATOR '<br/>') Utilizador",
 			"a.GolosEqCasa ApostaGolosEqCasa",
 			"a.GolosEqFora ApostaGolosEqFora",
 			"b.Estado Estado",
