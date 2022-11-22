@@ -57,6 +57,7 @@ CREATE TABLE ApostasJogos (
     GolosEqFora INT NULL,
 	PRIMARY KEY (Utilizador, JogoId)
 );
+
 CREATE TABLE ApostasBoosts (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
 	Fase        ENUM('Grupos','Eliminatoria'),

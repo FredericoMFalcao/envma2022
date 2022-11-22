@@ -92,7 +92,11 @@ if (!empty($_POST)) {
 		if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = 0;
 		
 		// Update data
-		update($_POST, $tbl, $filterArray);	
+		try {
+			update($_POST, $tbl, $filterArray);	
+		} catch (Exception $e) {
+			die ($e->getMessage());
+		}
 	}
 	
 }
