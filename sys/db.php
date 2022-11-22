@@ -7,7 +7,7 @@
 */
 function escapeStrings(&$array) {
 	foreach($array as $k=>$v)
-		if (is_string($v))
+		if (is_string($v) && $v != "NULL")
 			$array[$k] = "'".str_replace("'","''", $v)."'";
 	return $array;
 }
@@ -89,7 +89,7 @@ if (!empty($_POST)) {
 			}
 		
 		// Hotfix: 
-		if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = 0;
+		if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = "NULL";
 		
 		// Update data
 		try {
