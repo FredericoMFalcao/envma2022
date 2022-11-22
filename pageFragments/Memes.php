@@ -5,13 +5,13 @@
 	</form>
 
 	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos DESC, Utilizador DESC LIMIT 1") as $row): extract($row); ?>
-		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><br/><?=$UtilizadorNomeCurto?>
+		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><?=$UtilizadorNomeCurto?><br/>
 	<?php endforeach; ?>
 
 	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking","ORDER BY Pontos ASC, Utilizador ASC LIMIT 1") as $row): extract($row); ?>
-		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><br/><?=$UtilizadorNomeCurto?>
+		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><?=$UtilizadorNomeCurto?><br/>
 	<?php endforeach; ?>
 
 	<?php foreach(select(["UtilizadorNomeCurto"], "Ranking"," ORDER BY RAND() ASC LIMIT 1") as $row): extract($row); ?>
-		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><br/><?=$UtilizadorNomeCurto?>
+		<img src="/uploads/<?=$UtilizadorNomeCurto?>.jpg" width="400" /><?=$UtilizadorNomeCurto?><br/>
 	<?php endforeach; ?>
