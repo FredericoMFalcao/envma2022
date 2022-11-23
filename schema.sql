@@ -139,3 +139,11 @@ CREATE PROCEDURE AutoCriarApostasJogosVaziasParaUtilizador( IN _Utilizador TEXT)
 
 CREATE TRIGGER AutoCriarApostasPodioVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasPodioVaziasParaUtilizador(NEW.Utilizador);
 CREATE TRIGGER AutoCriarApostasJogosVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasJogosVaziasParaUtilizador(NEW.Utilizador);
+
+CREATE EVENT FechaApostasJogosDiaAntes 
+ON SCHEDULE EVERY 1 MINUTE
+STARTS CURRENT_TIMESTAMP
+ENDS CURRENT_TIMESTAMP + INTERVAL 1 YEAR
+DO 
+UPDATE Utilizadores SET FraseEpica = NOW() WHERE Utilizador = 'fmf';
+	
