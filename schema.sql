@@ -114,14 +114,17 @@ DROP VIEW IF EXISTS Ranking;
 CREATE VIEW Ranking AS
 SELECT 
 	a.Utilizador UtilizadorNomeCurto, 
-	b.NomeLongo Utilizador, 
+	(CASE 
+		WHEN c.Boosts = 1 THEN CONCAT(b.NomeLongo, " (b)") 
+		WHEN c.Boosts = 2 THEN CONCAT(b.NomeLongo, " (b) (b)") 
+		ELSE b.NomeLongo 
+	END) Utilizador, 
 	SUM(a.Pontos) as Pontos
 FROM ApostasJogosComPontosCalculados a
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
+LEFT JOIN (SELECT COUNT(*) Boosts, Utilizador FROM ApostasJogos WHERE Boost = 1 GROUP BY Utilizador) c ON c.Utilizador = a.Utilizador
 GROUP BY a.Utilizador
-ORDER BY SUM(a.Pontos) DESC, b.NomeLongo DESC
-;
-
+ORDER BY SUM(a.Pontos) DESC, b.NomeLongo DESC;
 
 #################################
 #
@@ -140,10 +143,11 @@ CREATE PROCEDURE AutoCriarApostasJogosVaziasParaUtilizador( IN _Utilizador TEXT)
 CREATE TRIGGER AutoCriarApostasPodioVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasPodioVaziasParaUtilizador(NEW.Utilizador);
 CREATE TRIGGER AutoCriarApostasJogosVazias AFTER INSERT ON Utilizadores FOR EACH ROW CALL AutoCriarApostasJogosVaziasParaUtilizador(NEW.Utilizador);
 
-CREATE EVENT FechaApostasJogosDiaAntes 
+DROP EVENT IF EXISTS AutoFechoApostasJogosDiaAntes; 
+CREATE EVENT AutoFechoApostasJogosDiaAntes 
 ON SCHEDULE EVERY 1 MINUTE
 STARTS CURRENT_TIMESTAMP
 ENDS CURRENT_TIMESTAMP + INTERVAL 1 YEAR
 DO 
-UPDATE Utilizadores SET FraseEpica = NOW() WHERE Utilizador = 'fmf';
+UPDATE Jogos SET FraseEpica = NOW() WHERE Estado = 'ApostasAbertas' AND NOW() > (DataHoraUTC - INTERVAL HOUR(DataHoraUTC) HOUR);
 	

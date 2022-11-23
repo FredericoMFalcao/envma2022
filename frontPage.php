@@ -28,6 +28,9 @@
 	
 	<h2>Ranking</h2>
 	<?php require __DIR__."/pageFragments/Ranking.php"; ?>
+
+	<h2>Dados Pessoais</h2>
+	<?php require __DIR__."/pageFragments/DadosPessoais.php"; ?>
 	
 </body>
 </html>
