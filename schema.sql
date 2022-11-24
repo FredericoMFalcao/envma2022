@@ -77,6 +77,32 @@ CREATE TABLE ApostasPodio (
 	PRIMARY KEY (Campeonato, Utilizador)
 );
 
+ DROP TABLE IF EXISTS ResultadosSubmetidoPelosUtilizadores;
+ CREATE TABLE ResultadosSubmetidoPelosUtilizadores (
+     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
+ 	  JogoId      INT REFERENCES Jogos (JogoId),
+     GolosEqCasa INT NULL,
+     GolosEqFora INT NULL
+ 
+ );
+ ## INIT TABLE:
+ INSERT INTO ResultadosSubmetidoPelosUtilizadores (Utilizador,JogoId,GolosEqCasa,GolosEqFora)
+ SELECT b.Utilizador, a.JogoId, a.GolosEqCasa, a.GolosEqFora FROM Jogos a CROSS JOIN Utilizadores b;
+ 
+ 
+ CREATE TRIGGER AtualizarResultados AFTER UPDATE ON ResultadosSubmetidoPelosUtilizadores FOR EACH ROW 
+ UPDATE Jogos SET GolosEqCasa = b.GolosEqCasa, GolosEqFora = b.GolosEqFora
+ INNER JOIN ( SELECT JogoId, 
+               (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = Jogos.JogoId GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqCasa, 
+               (SELECT a.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = Jogos.JogoId GROUP BY a.GolosEqFora ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqFora
+               FROM Jogos ORDER BY JogoId ASC
+		   ) as b
+ WHERE JogoId = NEW.JogoId
+ ;
+
+
+
+
 #################################
 #
 #   2. VIEWS / FORMULAS / CALCULOS
@@ -122,7 +148,7 @@ SELECT
 	SUM(a.Pontos) as Pontos
 FROM ApostasJogosComPontosCalculados a
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
-LEFT JOIN (SELECT COUNT(*) Boosts, Utilizador FROM ApostasJogos WHERE Boost = 1 GROUP BY Utilizador) c ON c.Utilizador = a.Utilizador
+LEFT JOIN (SELECT COUNT(*) Boosts, a.Utilizador FROM ApostasJogos a INNER JOIN Jogos b ON a.JogoId = b.JogoId and b.Estado = "Disputado" WHERE a.Boost = 1 GROUP BY a.Utilizador) c ON c.Utilizador = a.Utilizador
 GROUP BY a.Utilizador
 ORDER BY SUM(a.Pontos) DESC, b.NomeLongo DESC;
 
@@ -149,5 +175,5 @@ ON SCHEDULE EVERY 1 MINUTE
 STARTS CURRENT_TIMESTAMP
 ENDS CURRENT_TIMESTAMP + INTERVAL 1 YEAR
 DO 
-UPDATE Jogos SET FraseEpica = NOW() WHERE Estado = 'ApostasAbertas' AND NOW() > (DataHoraUTC - INTERVAL HOUR(DataHoraUTC) HOUR);
+UPDATE Jogos SET Estado = 'ApostasFechadas' WHERE Estado = 'ApostasAbertas' AND NOW() > (DataHoraUTC - INTERVAL HOUR(DataHoraUTC) HOUR);
 	

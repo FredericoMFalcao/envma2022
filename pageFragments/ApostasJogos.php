@@ -3,6 +3,16 @@
 			) as $Jogo) : ?>
 <h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
 <h5><?=$Jogo["DataHoraUTC"]?></h5>
+<?php $resultadoSubmetido = select(["GolosEqCasa","GolosEqFora"],"ResultadosSubmetidoPelosUtilizadores", "WHERE JogoId = {$Jogo["JogoId"]}")[0];?>
+<?php if (is_null($resultadoSubmetido["GolosEqCasa"])) : ?>
+<form action="" method="POST">
+	<input type="hidden" name="_table" value="ResultadosSubmetidoPelosUtilizadores" />
+	<select name="GolosEqCasa"><?=implode("",array_map(function($o){return "<option>$o</option>";},range(0,9)))?></select>
+	<select name="GolosEqFora"><?=implode("",array_map(function($o){return "<option>$o</option>";},range(0,9)))?></select>
+	<input type="submit" />
+</form>
+<?php endif;?>
+
 <table border="1">
 	<thead>
 		<tr>
