@@ -6,6 +6,7 @@
 <?php $resultadoSubmetido = select(["GolosEqCasa","GolosEqFora"],"ResultadosSubmetidoPelosUtilizadores", "WHERE Utilizador = \"$currentUser\" AND JogoId = ".$Jogo["JogoId"])[0];?>
 <?php if (is_null($resultadoSubmetido["GolosEqCasa"])) : ?>
 <form action="" method="POST">
+	Resultado final? 
 	<input type="hidden" name="_table"     value="ResultadosSubmetidoPelosUtilizadores" />
 	<input type="hidden" name="_pk_JogoId" value="<?=$Jogo["JogoId"]?>" />
 	<select name="GolosEqCasa"><?=implode("",array_map(function($o){return "<option>$o</option>";},range(0,9)))?></select>
