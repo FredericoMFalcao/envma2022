@@ -86,19 +86,27 @@ CREATE TABLE ApostasPodio (
  
  );
  ## INIT TABLE:
- INSERT INTO ResultadosSubmetidoPelosUtilizadores (Utilizador,JogoId,GolosEqCasa,GolosEqFora)
- SELECT b.Utilizador, a.JogoId, a.GolosEqCasa, a.GolosEqFora FROM Jogos a CROSS JOIN Utilizadores b;
+# INSERT INTO ResultadosSubmetidoPelosUtilizadores (Utilizador,JogoId,GolosEqCasa,GolosEqFora)
+# SELECT b.Utilizador, a.JogoId, a.GolosEqCasa, a.GolosEqFora FROM Jogos a CROSS JOIN Utilizadores b;
  
- 
+ DROP TRIGGER IF EXISTS AtualizarResultados;
  CREATE TRIGGER AtualizarResultados AFTER UPDATE ON ResultadosSubmetidoPelosUtilizadores FOR EACH ROW 
- UPDATE Jogos SET GolosEqCasa = b.GolosEqCasa, GolosEqFora = b.GolosEqFora
- INNER JOIN ( SELECT JogoId, 
-               (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = Jogos.JogoId GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqCasa, 
-               (SELECT a.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = Jogos.JogoId GROUP BY a.GolosEqFora ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqFora
-               FROM Jogos ORDER BY JogoId ASC
-		   ) as b
- WHERE JogoId = NEW.JogoId
+ UPDATE Jogos jj
+ INNER JOIN ( SELECT j.JogoId, 
+               (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = j.JogoId AND a.GolosEqCasa IS NOT NULL GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqCasa, 
+               (SELECT b.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores b WHERE b.JogoId = j.JogoId AND b.GolosEqFora IS NOT NULL GROUP BY b.GolosEqFora ORDER BY COUNT(b.Utilizador) DESC LIMIT 1) GolosEqFora
+               FROM Jogos j
+		   ) as b ON b.JogoId = jj.JogoId
+SET jj.GolosEqCasa = b.GolosEqCasa, jj.GolosEqFora = b.GolosEqFora, jj.Estado = "Disputado"
+WHERE jj.JogoId = NEW.JogoId
  ;
+ DROP TRIGGER IF EXISTS AtualizarResultados;
+ CREATE TRIGGER AtualizarResultados AFTER UPDATE ON ResultadosSubmetidoPelosUtilizadores FOR EACH ROW 
+CALL AtualizaResultadoDeJogo(
+    NEW.JogoId, 
+    (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = NEW.JogoId AND a.GolosEqCasa IS NOT NULL GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1),
+	(SELECT a.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = NEW.JogoId AND a.GolosEqFora IS NOT NULL GROUP BY a.GolosEqFora ORDER BY COUNT(a.Utilizador) DESC LIMIT 1)
+);
 
 
 
@@ -176,4 +184,8 @@ STARTS CURRENT_TIMESTAMP
 ENDS CURRENT_TIMESTAMP + INTERVAL 1 YEAR
 DO 
 UPDATE Jogos SET Estado = 'ApostasFechadas' WHERE Estado = 'ApostasAbertas' AND NOW() > (DataHoraUTC - INTERVAL HOUR(DataHoraUTC) HOUR);
-	
+
+
+DROP PROCEDURE IF EXISTS AtualizaResultadoDeJogo;
+CREATE PROCEDURE AtualizaResultadoDeJogo (IN _JogoId INT, IN _GolosEqCasa INT, IN _GolosEqFora INT)
+UPDATE Jogos SET GolosEqCasa = _GolosEqCasa, GolosEqFora = _GolosEqFora, Estado = "Disputado" WHERE JogoID = _JogoId;
