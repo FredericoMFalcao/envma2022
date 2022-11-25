@@ -80,9 +80,10 @@ CREATE TABLE ApostasPodio (
  DROP TABLE IF EXISTS ResultadosSubmetidoPelosUtilizadores;
  CREATE TABLE ResultadosSubmetidoPelosUtilizadores (
      Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
- 	  JogoId      INT REFERENCES Jogos (JogoId),
+ 	 JogoId      INT REFERENCES Jogos (JogoId),
      GolosEqCasa INT NULL,
-     GolosEqFora INT NULL
+     GolosEqFora INT NULL,
+	 DataHoraSubmissao TIMESTAMP
  
  );
  ## INIT TABLE:

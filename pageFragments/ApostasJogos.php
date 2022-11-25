@@ -4,6 +4,7 @@
 <h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
 <h5><?=$Jogo["DataHoraUTC"]?></h5>
 <?php $resultadoSubmetido = select(["GolosEqCasa","GolosEqFora"],"ResultadosSubmetidoPelosUtilizadores", "WHERE Utilizador = \"$currentUser\" AND JogoId = ".$Jogo["JogoId"])[0];?>
+<script>console.log(<?=json_encode($Jogo)?>);</script>
 <?php if (is_null($resultadoSubmetido["GolosEqCasa"] &&  $Jogo["Estado"] != "ApostasAbertas")) : ?>
 <form action="" method="POST">
 	Resultado final? 
