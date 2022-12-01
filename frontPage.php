@@ -8,7 +8,7 @@
 	<h1>ENVMA 2022</h1>
 	<ul>
 		<li><a href="#ApostasPodio">Apostas Pódio</a></li>
-		<li><a href="#ApostasJogos">Apostas Jogos</a> (<a href="JogoHoje">Hoje</a>)</li>
+		<li><a href="#ApostasJogos">Apostas Jogos</a> (<a href="#JogoHoje">Hoje</a>)</li>
 		<li><a href="#Ranking">Ranking</a></li>
 	</ul>
 	

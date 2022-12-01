@@ -1,6 +1,14 @@
 <?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado","Fase", "(CASE WHEN DAY(DataHoraUTC) = DAY(NOW()) AND MONTH(DataHoraUTC) = MONTH(NOW()) AND YEAR(DataHoraUTC) = YEAR(NOW()) THEN 1 ELSE 0 END) Hoje"],
 		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
 			) as $Jogo) : ?>
+		
+<?php if ($Jogo["Hoje"] == 1) : ?>
+<h3 id="JogoHoje">Hoje</h3>
+<hr/>
+<?php endif; ?>
+
+		
+		
 <h3><?=$Jogo["EquipaCasa"]?> vs. <?=$Jogo["EquipaFora"]?> <?=$Jogo["Estado"]=="Disputado"?"(".$Jogo["GolosEqCasa"]." - ". $Jogo["GolosEqFora"].")":""?></h3>
 <h5><?=$Jogo["DataHoraUTC"]?></h5>
 <?php $resultadoSubmetido = select(["GolosEqCasa","GolosEqFora"],"ResultadosSubmetidoPelosUtilizadores", "WHERE Utilizador = \"$currentUser\" AND JogoId = ".$Jogo["JogoId"])[0];?>
@@ -15,10 +23,6 @@
 </form>
 <?php endif;?>
 
-<?php if ($Jogo["Hoje"] == 1) : ?>
-<h3 id="JogoHoje">Hoje</h3>
-<hr/>
-<?php endif; ?>
 
 <table border="1">
 	<thead>
