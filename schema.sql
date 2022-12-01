@@ -57,7 +57,7 @@ CREATE TABLE Jogos (
 CREATE TRIGGER AutoCriarApostaJogoVaziaParaCadaNovoJogo AFTER INSERT ON Jogos FOR EACH ROW
 INSERT INTO ApostasJogos (Utilizador,JogoId,Fase) SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
 
-CREATE TRIGGER ReCalculaBadges AFTER UPDATE ON Jogos FOR EACH ROW CALL CalcularMaiorSeqDeCincos();
+CREATE TRIGGER ReCalculaBadges AFTER UPDATE ON Jogos FOR EACH ROW CALL CalcularBadges();
 
 
 #   1.3. APOSTAS
