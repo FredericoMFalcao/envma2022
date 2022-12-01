@@ -17,8 +17,10 @@ CREATE TABLE Utilizadores (
 );
 
 CREATE TABLE EstatisticasUtilizadores (
-    Utilizador        CHAR(3) REFERENCES Utilizadores (Utilizador),
-  MaiorSeqDeCincos  INT
+    Utilizador                     CHAR(3) REFERENCES Utilizadores (Utilizador),
+    MaiorSeqDeCincos               INT DEFAULT(0),
+	MaiorSeqDeTendenciaCorreta     INT DEFAULT(0),
+	MaiorContribuinteDeResultados  INT DEFAULT(0)
 );
 
 #   1.2. DESPORTO
@@ -53,8 +55,9 @@ CREATE TABLE Jogos (
 );
 
 CREATE TRIGGER AutoCriarApostaJogoVaziaParaCadaNovoJogo AFTER INSERT ON Jogos FOR EACH ROW
-INSERT INTO ApostasJogos (Utilizador,JogoId,Fase) 
-SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
+INSERT INTO ApostasJogos (Utilizador,JogoId,Fase) SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
+
+CREATE TRIGGER ReCalculaBadges AFTER UPDATE ON Jogos FOR EACH ROW CALL CalcularMaiorSeqDeCincos();
 
 
 #   1.3. APOSTAS
@@ -196,32 +199,3 @@ CREATE PROCEDURE AtualizaResultadoDeJogo (IN _JogoId INT, IN _GolosEqCasa INT, I
 UPDATE Jogos SET GolosEqCasa = _GolosEqCasa, GolosEqFora = _GolosEqFora, Estado = "Disputado" WHERE JogoID = _JogoId;
 
 
-DELIMITER $$
-CREATE PROCEDURE CalcularMaiorSeqDeCincos()
-  BEGIN
-  DECLARE cur1 CURSOR FOR SELECT Utilizador, JogoId, Pontos FROM ApostasJogosComPontosCalculados ORDER BY Utilizador ASC, JogoId ASC;
-  DECLARE currentUtilizador CHAR(3);
-  DECLARE currentJogoId, currentPontos INT;
-  DECLARE lastUtilizador CHAR(3);
-  DECLARE MaiorSeqDeCincos INT;
-
-  DECLARE done INT DEFAULT FALSE;
-  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-  
-  
-  SET MaiorSeqDeCincos = 0;
-  
-  OPEN cur1;
-  
-  the_loop: LOOP
-    FETCH cur1 INTO currentUtilizador, currentJogoId, currentPontos;
-	IF done THEN LEAVE the_loop; END IF;
-	
-	
-  END LOOP;
-  
-  CLOSE cur1;
-  
-  END; 
-$$
-DELIMITER ;

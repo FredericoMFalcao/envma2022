@@ -11,6 +11,7 @@
 		<li><a href="#ApostasPodio">Apostas Pódio</a></li>
 		<li><a href="#ApostasJogos">Apostas Jogos</a> (<a href="#JogoHoje">Hoje</a>)</li>
 		<li><a href="#Ranking">Ranking</a></li>
+		<li><a href="#Badges">Badges</a></li>
 	</ul>
 	
 	
@@ -36,6 +37,10 @@
 	
 	<h2 id="Ranking">Ranking</h2>
 	<?php require __DIR__."/pageFragments/Ranking.php"; ?>
+
+	<h2 id="Badges">Badges</h2>
+	<?php require __DIR__."/pageFragments/Badges.php"; ?>
+
 
 	<h2 id="DadosPessoais">Dados Pessoais</h2>
 	<?php require __DIR__."/pageFragments/DadosPessoais.php"; ?>
