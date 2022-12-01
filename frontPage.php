@@ -6,6 +6,7 @@
 <body>
 	
 	<h1>ENVMA 2022</h1>
+	<h5>- <?=$currentUserData["NomeLongo"]?></h5>
 	<ul>
 		<li><a href="#ApostasPodio">Apostas Pódio</a></li>
 		<li><a href="#ApostasJogos">Apostas Jogos</a> (<a href="#JogoHoje">Hoje</a>)</li>
@@ -13,7 +14,7 @@
 	</ul>
 	
 	
-	<h5 id="FraseEpica">- <?=$currentUserData["NomeLongo"]?></h5>
+	<h2 id="FraseEpica">Frase Épica</h2>
 	<?php require __DIR__."/pageFragments/FraseEpica.php"; ?>
 	
 	<hr/>
