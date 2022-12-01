@@ -26,7 +26,7 @@
 				</tr>
 			<?php endforeach;?>
 			<tr>
-				<td colspan="2">
+				<td colspan="3">
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Utilizador" />
 						<input type="hidden" name="_operation" value="insert" />
@@ -59,7 +59,7 @@
 				</tr>
 			<?php endforeach;?>
 			<tr>
-				<td colspan="2">
+				<td colspan="5">
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Equipas" />
 						<input type="hidden" name="_operation" value="insert" />
