@@ -52,6 +52,11 @@ CREATE TABLE Jogos (
   Estado        ENUM('ApostasAbertas','ApostasFechadas','Disputado') DEFAULT ('ApostasAbertas')
 );
 
+CREATE TRIGGER AutoCriarApostaJogoVaziaParaCadaNovoJogo AFTER INSERT ON Jogos FOR EACH ROW
+INSERT INTO ApostasJogos (Utilizador,JogoId,Fase) 
+SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
+
+
 #   1.3. APOSTAS
 ###################
 CREATE TABLE ApostasJogos (

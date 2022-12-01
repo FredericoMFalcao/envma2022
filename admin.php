@@ -13,6 +13,7 @@
 			<tr>
 				<th>Nome Curto</th>
 				<th>Nome Longo</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,6 +21,7 @@
 				<tr>
 					<td><?=$NomeCurto?></td>
 					<td><?=$NomeLongo?></td>
+					<td><form action="" method="POST"><input type="hidden" name="_table" value="Equipas"><input type="hidden" name="_pk" value="<?=$NomeCurto?>"><input type="submit" name="_operation" value="delete"></form></td>
 				</tr>
 			<?php endforeach;?>
 			<tr>
@@ -46,15 +48,17 @@
 			<tr>
 				<th>Nome Curto</th>
 				<th>Nome Longo</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach(select(["EquipaCasa","EquipaFora","DataHoraUTC", "Fase"],"Jogos") as $row) : extract($row); ?>
+			<?php foreach(select(["JogoId","EquipaCasa","EquipaFora","DataHoraUTC", "Fase"],"Jogos") as $row) : extract($row); ?>
 				<tr>
 					<td><?=$EquipaCasa?></td>
 					<td><?=$EquipaFora?></td>
 					<td><?=$DataHoraUTC?></td>
 					<td><?=$Fase?></td>
+					<td><form action="" method="POST"><input type="hidden" name="_table" value="Jogos"><input type="hidden" name="_pk" value="<?=$JogoId?>"><input type="submit" name="_operation" value="delete"></form></td>
 				</tr>
 			<?php endforeach;?>
 			<tr>

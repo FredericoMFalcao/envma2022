@@ -41,6 +41,15 @@ function update(array $cols, string $tblName, array $where) {
 	$stmt = $db->prepare($query);
 	return $stmt->execute();
 }
+function delete($where, $tblName) {
+	global $db;
+	$stmt = $db->prepare("DELETE FROM $tblName  WHERE "
+	.implode(" AND ",array_map(function($name, $value){return "$name = $value";},array_keys($where),escapeStrings($where)))
+    );
+
+	
+	return $stmt->execute();
+}
 
 
 
@@ -82,7 +91,11 @@ if (!empty($_POST)) {
 	if (isset($_POST["_table"])) {
 		// Extract table name
 		$tbl = $_POST["_table"]; unset($_POST["_table"]);
-		if (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "insert") {
+		
+		if (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "delete") {
+			try { delete($_POST, $tbl);	} catch (Exception $e) {die ($e->getMessage()); }			
+			
+		} elseif (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "insert") {
 			unset($_POST["_operation"]);
 			//
 			//  Handle INSERTs
