@@ -93,7 +93,14 @@ if (!empty($_POST)) {
 		$tbl = $_POST["_table"]; unset($_POST["_table"]);
 		
 		if (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "delete") {
-			try { delete($_POST, $tbl);	} catch (Exception $e) {die ($e->getMessage()); }			
+			$filterArray = [];
+			foreach($_POST as $key => $value)
+				if (strpos($key,"_pk_") === 0) {
+					unset($_POST[$key]);
+					$filterArray[str_replace("_pk_","",$key)] = $value;
+				}
+			
+			try { delete($filterArray, $tbl);	} catch (Exception $e) {die ($e->getMessage()); }			
 			
 		} elseif (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "insert") {
 			unset($_POST["_operation"]);
