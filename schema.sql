@@ -62,19 +62,12 @@ SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
 CREATE TABLE ApostasJogos (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
     JogoId      INT REFERENCES Jogos (JogoId),
-  Fase        ENUM('Grupos','Eliminatoria') DEFAULT('Grupos'),
+    Fase        ENUM('Grupos','Eliminatoria') DEFAULT('Grupos'),
     Boost       INT DEFAULT (0),
     GolosEqCasa INT NULL,
     GolosEqFora INT NULL,
-  PRIMARY KEY (Utilizador, JogoId)
-);
-
-CREATE TABLE ApostasBoosts (
-    Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
-  Fase        ENUM('Grupos','Eliminatoria'),
-  JogoId      INT REFERENCES Jogos (JogoId),
-  -- Apenas UM boost por utilizador / fase
-  CONSTRAINT UNIQUE (Utilizador, Fase)
+  PRIMARY KEY (Utilizador, JogoId),
+  CONSTRAINT UNIQUE (Utilizador, Fase, Boost)
 );
 
 CREATE TABLE ApostasPodio (
