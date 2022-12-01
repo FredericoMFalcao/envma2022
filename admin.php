@@ -21,7 +21,7 @@
 				<tr>
 					<td><?=$NomeCurto?></td>
 					<td><?=$NomeLongo?></td>
-					<td><form action="" method="POST"><input type="hidden" name="_table" value="Equipas"><input type="hidden" name="_pk" value="<?=$NomeCurto?>"><input type="submit" name="_operation" value="delete"></form></td>
+					<td><form action="" method="POST"><input type="hidden" name="_table" value="Equipas"><input type="hidden" name="_pk_NomeCurto" value="<?=$NomeCurto?>"><input type="submit" name="_operation" value="delete"></form></td>
 				</tr>
 			<?php endforeach;?>
 			<tr>
@@ -58,7 +58,7 @@
 					<td><?=$EquipaFora?></td>
 					<td><?=$DataHoraUTC?></td>
 					<td><?=$Fase?></td>
-					<td><form action="" method="POST"><input type="hidden" name="_table" value="Jogos"><input type="hidden" name="_pk" value="<?=$JogoId?>"><input type="submit" name="_operation" value="delete"></form></td>
+					<td><form action="" method="POST"><input type="hidden" name="_table" value="Jogos"><input type="hidden" name="_pk_JogoId" value="<?=$JogoId?>"><input type="submit" name="_operation" value="delete"></form></td>
 				</tr>
 			<?php endforeach;?>
 			<tr>
