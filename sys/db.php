@@ -82,7 +82,7 @@ if (!empty($_POST)) {
 	if (isset($_POST["_table"])) {
 		// Extract table name
 		$tbl = $_POST["_table"]; unset($_POST["_table"]);
-		if (isset($_POST["_operation"]) && $_POST["_operation"] == "insert") {
+		if (isset($_POST["_operation"]) && strtolower($_POST["_operation"]) == "insert") {
 			unset($_POST["_operation"]);
 			//
 			//  Handle INSERTs

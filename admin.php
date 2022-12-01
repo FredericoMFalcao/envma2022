@@ -26,6 +26,7 @@
 				<td colspan="2">
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Equipas" />
+						<input type="hidden" name="_operation" value="insert" />
 						<br/>Nome Curto : <input type="text" name="NomeCurto" value="" />
 						<br/>Nome Longo : <input type="text" name="NomeLongo" value="" />
 						<br/><input type="submit" />
@@ -60,6 +61,7 @@
 				<td colspan="2">
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Jogos" />
+						<input type="hidden" name="_operation" value="insert" />
 						<br/>Equipa Casa : <select name="EquipaCasa"><?php foreach(select(["NomeCurto", "NomeLongo"],"Equipas") as $row) {extract($row); echo "<option value=\"$NomeCurto\">$NomeLongo</option>";} ?></select>
 						<br/>Equipa Fora : <select name="EquipaFora"><?php foreach(select(["NomeCurto", "NomeLongo"],"Equipas") as $row) {extract($row); echo "<option value=\"$NomeCurto\">$NomeLongo</option>";} ?></select>
 						<br/>Data Hora UTC : <input type="date" name="DataHoraUTC" value="" />
