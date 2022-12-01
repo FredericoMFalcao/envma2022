@@ -2,7 +2,7 @@
 		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
 			) as $Jogo) : ?>
 		
-<?php if ($Jogo["Hoje"] == 1) : ?>
+<?php if ($Jogo["Hoje"] == 1 && !isset($TagHojeJaImpresso)) : $TagHojeJaImpresso = 1; ?>
 <h3 id="JogoHoje">Hoje</h3>
 <hr/>
 <?php endif; ?>
