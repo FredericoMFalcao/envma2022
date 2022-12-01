@@ -11,8 +11,14 @@ CREATE TABLE Utilizadores (
     NomeLongo          VARCHAR(255) NOT NULL,
     FraseEpica         VARCHAR(1024) NULL,
     Token              VARCHAR(32) DEFAULT MD5(RAND()),
-    LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/setCookie.php?loginID=",Token)) VIRTUAL,
+    LoginUrl           VARCHAR(255) AS (CONCAT("http://envma2022.duckdns.org/setCookie.php?loginID=",Token)) VIRTUAL,  
+	Admin              INT DEFAULT(0),
     PRIMARY KEY (Utilizador)
+);
+
+CREATE TABLE EstatisticasUtilizadores (
+    Utilizador        CHAR(3) REFERENCES Utilizadores (Utilizador),
+  MaiorSeqDeCincos  INT
 );
 
 #   1.2. DESPORTO
@@ -20,7 +26,7 @@ CREATE TABLE Utilizadores (
 CREATE TABLE Equipas (
     NomeCurto    CHAR(3) NOT NULL,
     NomeLongo    VARCHAR(255) NOT NULL,
-	PRIMARY KEY (NomeCurto)
+  PRIMARY KEY (NomeCurto)
 );
 
 CREATE TABLE Campeonatos (
@@ -30,7 +36,7 @@ CREATE TABLE Campeonatos (
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     MelhorMarcador       VARCHAR(255) NULL,
-	Estado               ENUM('EmPreparacao','Iniciado','Finalizado') DEFAULT ('EmPreparacao'),
+  Estado               ENUM('EmPreparacao','Iniciado','Finalizado') DEFAULT ('EmPreparacao'),
     PRIMARY KEY (Nome)
 );
 INSERT INTO Campeonatos (Nome,Estado) VALUES ("CampeonatoMundo2022","EmPreparacao");
@@ -43,7 +49,7 @@ CREATE TABLE Jogos (
     GolosEqFora   INT NULL,
     DataHoraUTC   DATETIME NOT NULL,
     Fase          ENUM ('Grupos','Eliminatoria') DEFAULT('Grupos'), 
-	Estado        ENUM('ApostasAbertas','ApostasFechadas','Disputado') DEFAULT ('ApostasAbertas')
+  Estado        ENUM('ApostasAbertas','ApostasFechadas','Disputado') DEFAULT ('ApostasAbertas')
 );
 
 #   1.3. APOSTAS
@@ -51,19 +57,19 @@ CREATE TABLE Jogos (
 CREATE TABLE ApostasJogos (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
     JogoId      INT REFERENCES Jogos (JogoId),
-	Fase        ENUM('Grupos','Eliminatoria') DEFAULT('Grupos'),
+  Fase        ENUM('Grupos','Eliminatoria') DEFAULT('Grupos'),
     Boost       INT DEFAULT (0),
     GolosEqCasa INT NULL,
     GolosEqFora INT NULL,
-	PRIMARY KEY (Utilizador, JogoId)
+  PRIMARY KEY (Utilizador, JogoId)
 );
 
 CREATE TABLE ApostasBoosts (
     Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
-	Fase        ENUM('Grupos','Eliminatoria'),
-	JogoId      INT REFERENCES Jogos (JogoId),
-	-- Apenas UM boost por utilizador / fase
-	CONSTRAINT UNIQUE (Utilizador, Fase)
+  Fase        ENUM('Grupos','Eliminatoria'),
+  JogoId      INT REFERENCES Jogos (JogoId),
+  -- Apenas UM boost por utilizador / fase
+  CONSTRAINT UNIQUE (Utilizador, Fase)
 );
 
 CREATE TABLE ApostasPodio (
@@ -74,16 +80,16 @@ CREATE TABLE ApostasPodio (
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     MelhorMarcador       VARCHAR(255) NULL,
-	PRIMARY KEY (Campeonato, Utilizador)
+  PRIMARY KEY (Campeonato, Utilizador)
 );
 
  DROP TABLE IF EXISTS ResultadosSubmetidoPelosUtilizadores;
  CREATE TABLE ResultadosSubmetidoPelosUtilizadores (
      Utilizador  CHAR(3) REFERENCES Utilizadores (Utilizador),
- 	 JogoId      INT REFERENCES Jogos (JogoId),
+    JogoId      INT REFERENCES Jogos (JogoId),
      GolosEqCasa INT NULL,
      GolosEqFora INT NULL,
-	 DataHoraSubmissao TIMESTAMP
+   DataHoraSubmissao TIMESTAMP
  
  );
  ## INIT TABLE:
@@ -97,7 +103,7 @@ CREATE TABLE ApostasPodio (
                (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = j.JogoId AND a.GolosEqCasa IS NOT NULL GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1) GolosEqCasa, 
                (SELECT b.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores b WHERE b.JogoId = j.JogoId AND b.GolosEqFora IS NOT NULL GROUP BY b.GolosEqFora ORDER BY COUNT(b.Utilizador) DESC LIMIT 1) GolosEqFora
                FROM Jogos j
-		   ) as b ON b.JogoId = jj.JogoId
+       ) as b ON b.JogoId = jj.JogoId
 SET jj.GolosEqCasa = b.GolosEqCasa, jj.GolosEqFora = b.GolosEqFora, jj.Estado = "Disputado"
 WHERE jj.JogoId = NEW.JogoId
  ;
@@ -106,7 +112,7 @@ WHERE jj.JogoId = NEW.JogoId
 CALL AtualizaResultadoDeJogo(
     NEW.JogoId, 
     (SELECT a.GolosEqCasa FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = NEW.JogoId AND a.GolosEqCasa IS NOT NULL GROUP BY a.GolosEqCasa ORDER BY COUNT(a.Utilizador) DESC LIMIT 1),
-	(SELECT a.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = NEW.JogoId AND a.GolosEqFora IS NOT NULL GROUP BY a.GolosEqFora ORDER BY COUNT(a.Utilizador) DESC LIMIT 1)
+  (SELECT a.GolosEqFora FROM ResultadosSubmetidoPelosUtilizadores a WHERE a.JogoId = NEW.JogoId AND a.GolosEqFora IS NOT NULL GROUP BY a.GolosEqFora ORDER BY COUNT(a.Utilizador) DESC LIMIT 1)
 );
 
 
@@ -141,20 +147,20 @@ INNER JOIN ApostasJogos AS b ON a.JogoId = b.JogoId
 
 # CREATE VIEW ApostasPodioComPontosCalculados AS
 # SELECT
-# 	b.Utilizador
+#   b.Utilizador
 # FROM
 # 
 # 
 DROP VIEW IF EXISTS Ranking;
 CREATE VIEW Ranking AS
 SELECT 
-	a.Utilizador UtilizadorNomeCurto, 
-	(CASE 
-		WHEN c.Boosts = 1 THEN CONCAT(b.NomeLongo, " (b)") 
-		WHEN c.Boosts = 2 THEN CONCAT(b.NomeLongo, " (b) (b)") 
-		ELSE b.NomeLongo 
-	END) Utilizador, 
-	SUM(a.Pontos) as Pontos
+  a.Utilizador UtilizadorNomeCurto, 
+  (CASE 
+    WHEN c.Boosts = 1 THEN CONCAT(b.NomeLongo, " (b)") 
+    WHEN c.Boosts = 2 THEN CONCAT(b.NomeLongo, " (b) (b)") 
+    ELSE b.NomeLongo 
+  END) Utilizador, 
+  SUM(a.Pontos) as Pontos
 FROM ApostasJogosComPontosCalculados a
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
 LEFT JOIN (SELECT COUNT(*) Boosts, a.Utilizador FROM ApostasJogos a INNER JOIN Jogos b ON a.JogoId = b.JogoId and b.Estado = "Disputado" WHERE a.Boost = 1 GROUP BY a.Utilizador) c ON c.Utilizador = a.Utilizador
@@ -190,3 +196,34 @@ UPDATE Jogos SET Estado = 'ApostasFechadas' WHERE Estado = 'ApostasAbertas' AND 
 DROP PROCEDURE IF EXISTS AtualizaResultadoDeJogo;
 CREATE PROCEDURE AtualizaResultadoDeJogo (IN _JogoId INT, IN _GolosEqCasa INT, IN _GolosEqFora INT)
 UPDATE Jogos SET GolosEqCasa = _GolosEqCasa, GolosEqFora = _GolosEqFora, Estado = "Disputado" WHERE JogoID = _JogoId;
+
+
+DELIMITER $$
+CREATE PROCEDURE CalcularMaiorSeqDeCincos()
+  BEGIN
+  DECLARE cur1 CURSOR FOR SELECT Utilizador, JogoId, Pontos FROM ApostasJogosComPontosCalculados ORDER BY Utilizador ASC, JogoId ASC;
+  DECLARE currentUtilizador CHAR(3);
+  DECLARE currentJogoId, currentPontos INT;
+  DECLARE lastUtilizador CHAR(3);
+  DECLARE MaiorSeqDeCincos INT;
+
+  DECLARE done INT DEFAULT FALSE;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+  
+  
+  SET MaiorSeqDeCincos = 0;
+  
+  OPEN cur1;
+  
+  the_loop: LOOP
+    FETCH cur1 INTO currentUtilizador, currentJogoId, currentPontos;
+	IF done THEN LEAVE the_loop; END IF;
+	
+	
+  END LOOP;
+  
+  CLOSE cur1;
+  
+  END; 
+$$
+DELIMITER ;

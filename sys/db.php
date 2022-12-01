@@ -59,10 +59,11 @@ $db = new PDO('mysql:dbname='.(explode(".",$_SERVER["SERVER_NAME"])[0]).';host='
 
 // 1.3. HANDLE LOGIN
 if (!isset($_COOKIE["loginID"])) die("No login id token provided.");
-$queryResults = select(["Utilizador","FraseEpica","NomeLongo"], "Utilizadores","WHERE Token = '{$_COOKIE["loginID"]}'");
+$queryResults = select(["Utilizador","FraseEpica","NomeLongo","Admin"], "Utilizadores","WHERE Token = '{$_COOKIE["loginID"]}'");
 if (empty($queryResults)) die("Login token not found.");
 $currentUser = $queryResults[0]["Utilizador"];
 $currentUserData = $queryResults[0];
+$currentUserIsAdmin = ($queryResults[0]["Admin"] ? true : false);
 
 // 1.4 PRE-LOAD CHAMPIONSHIP
 $campeonato = select(["Nome","Estado"], "Campeonatos")[0]; 
