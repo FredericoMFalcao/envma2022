@@ -7,8 +7,42 @@
 <?php if ($currentUserIsAdmin) : ?>
 	<h1>ENVMA 2022 - admin</h1>
 	
+
+	<h2>Utiliazadores</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Utilizador</th>
+				<th>Nome Longo</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach(select(["Utilizador","NomeLongo"],"Utilizadores") as $row) : extract($row); ?>
+				<tr>
+					<td><?=$Utilizador?></td>
+					<td><?=$NomeLongo?></td>
+					<td><form action="" method="POST"><input type="hidden" name="_table" value="Utilizadores"><input type="hidden" name="_pk_Utilizador" value="<?=$Utilizador?>"><input type="submit" name="_operation" value="delete"></form></td>
+				</tr>
+			<?php endforeach;?>
+			<tr>
+				<td colspan="2">
+					<form action="" method="POST">
+						<input type="hidden" name="_table" value="Utilizador" />
+						<input type="hidden" name="_operation" value="insert" />
+						<br/>Utilizador : <input type="text" name="Utilizador" value="" />
+						<br/>Nome Longo : <input type="text" name="NomeLongo" value="" />
+						<br/><input type="submit" />
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<hr/>
+
 	<h2>Equipas</h2>
-	<table>
+	<table border="1">
 		<thead>
 			<tr>
 				<th>Nome Curto</th>
@@ -43,7 +77,7 @@
 
 
 	<h2>Jogos</h2>
-	<table>
+	<table border="1">
 		<thead>
 			<tr>
 				<th>Nome Curto</th>
