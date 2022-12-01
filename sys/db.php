@@ -82,22 +82,40 @@ if (!empty($_POST)) {
 	if (isset($_POST["_table"])) {
 		// Extract table name
 		$tbl = $_POST["_table"]; unset($_POST["_table"]);
-		$filterArray = ["Utilizador" => $currentUser];
-		foreach($_POST as $key => $value)
-			if (strpos($key,"_pk_") === 0) {
-				unset($_POST[$key]);
-				$filterArray[str_replace("_pk_","",$key)] = $value;
-			}
+		if (isset($_POST["_operation"]) && $_POST["_operation"] == "insert") {
+			unset($_POST["_operation"]);
+			//
+			//  Handle INSERTs
+			//
+			try {
+				insert($_POST, $tbl);	
+			} catch (Exception $e) {
+				die ($e->getMessage());
+			}			
+			
+		} else {
+			if (isset($_POST["operation"])) unset($_POST["_operation"]);
+			//
+			//  Handle UPDATES
+			//
+			$filterArray = ["Utilizador" => $currentUser];
+			foreach($_POST as $key => $value)
+				if (strpos($key,"_pk_") === 0) {
+					unset($_POST[$key]);
+					$filterArray[str_replace("_pk_","",$key)] = $value;
+				}
 		
-		// Hotfix: 
-		if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = "NULL";
+			// Hotfix: 
+			if ($tbl == "ApostasJogos" && !isset($_POST["Boost"])) $_POST["Boost"] = "NULL";
 		
-		// Update data
-		try {
-			update($_POST, $tbl, $filterArray);	
-		} catch (Exception $e) {
-			die ($e->getMessage());
+			// Update data
+			try {
+				update($_POST, $tbl, $filterArray);	
+			} catch (Exception $e) {
+				die ($e->getMessage());
+			}			
 		}
+
 	}
 	
 }
