@@ -54,8 +54,9 @@ CREATE TABLE Jogos (
   Estado        ENUM('ApostasAbertas','ApostasFechadas','Disputado') DEFAULT ('ApostasAbertas')
 );
 
+DROP TRIGGER IF EXISTS AutoCriarApostaJogoVaziaParaCadaNovoJogo;
 CREATE TRIGGER AutoCriarApostaJogoVaziaParaCadaNovoJogo AFTER INSERT ON Jogos FOR EACH ROW
-INSERT INTO ApostasJogos (Utilizador,JogoId,Fase) SELECT Utilizador, NEW.JogoId, NEW.Fase FROM Utilizadores;
+INSERT INTO ApostasJogos (Utilizador,JogoId,Fase,Boost) SELECT Utilizador, NEW.JogoId, NEW.Fase, NULL FROM Utilizadores;
 
 CREATE TRIGGER ReCalculaBadges AFTER UPDATE ON Jogos FOR EACH ROW CALL CalcularBadges();
 
