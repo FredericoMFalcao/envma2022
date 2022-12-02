@@ -1,7 +1,8 @@
+DROP VIEW IF EXISTS BadgesIndiceApostaIsolada;
 CREATE VIEW BadgesIndiceApostaIsolada AS
 SELECT 
- d.Utilizador,
- SUM(d.IndiceApostaIsolada)
+ d.Utilizador Utilizador,
+ SUM(d.IndiceApostaIsolada) IndiceApostaIsolada
  FROM (
 	SELECT 
 	  a.Utilizador Utilizador, 
