@@ -48,7 +48,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach(select(["Utilizador","PrimeiroClassificado","SegundoClassificado","TerceiroClassificado","QuartoClassificado","MelhorMarcador"],"ApostasPodio") as $row): extract($row); ?>
+	<?php foreach(select(["b.NomeLongo Utilizador","a.PrimeiroClassificado","a.SegundoClassificado","a.TerceiroClassificado","a.QuartoClassificado","a.MelhorMarcador"],"ApostasPodio a","INNER JOIN Utilizadores b ON a.Utilizador = b.Utilizador") as $row): extract($row); ?>
 		<tr>
 			<td><?=$Utilizador?></td>
 			<td><?=$PrimeiroClassificado?></td>
