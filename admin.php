@@ -102,7 +102,7 @@
 						<input type="hidden" name="_operation" value="insert" />
 						<br/>Equipa Casa : <select name="EquipaCasa"><?php foreach(select(["NomeCurto", "NomeLongo"],"Equipas") as $row) {extract($row); echo "<option value=\"$NomeCurto\">$NomeLongo</option>";} ?></select>
 						<br/>Equipa Fora : <select name="EquipaFora"><?php foreach(select(["NomeCurto", "NomeLongo"],"Equipas") as $row) {extract($row); echo "<option value=\"$NomeCurto\">$NomeLongo</option>";} ?></select>
-						<br/>Data Hora UTC : <input type="date" name="DataHoraUTC" value="" />
+						<br/>Data Hora UTC : <input type="datetime-local" name="DataHoraUTC" value="" />
 						<br/>Fase : <select name="Fase"><option>Grupos</option><option>Eliminatória</option></select>
 						<br/><input type="submit" />
 					</form>
