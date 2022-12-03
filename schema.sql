@@ -38,7 +38,7 @@ CREATE TABLE Campeonatos (
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     MelhorMarcador       VARCHAR(255) NULL,
-  Estado               ENUM('EmPreparacao','Iniciado','Finalizado') DEFAULT ('EmPreparacao'),
+    Estado               ENUM('EmPreparacao','Iniciado','EntreFases','Finalizado') DEFAULT ('EmPreparacao'),
     PRIMARY KEY (Nome)
 );
 INSERT INTO Campeonatos (Nome,Estado) VALUES ("CampeonatoMundo2022","EmPreparacao");
@@ -90,6 +90,12 @@ CREATE TABLE ApostasPodio (
     AlteradoEntreFases   INT DEFAULT (0)
   PRIMARY KEY (Campeonato, Utilizador)
 );
+
+CREATE TRIGGER ApostasPodioMarcarAlteradoEntreFases BEFORE UPDATE ON ApostasPodio FOR EACH ROW 
+SET NEW.AlteradoEntreFases = (CASE WHEN (SELECT Estado FROM Campeonatos LIMIT 1) = "EntreFases" THEN 1 ELSE 0 END);
+
+
+
 
  DROP TABLE IF EXISTS ResultadosSubmetidoPelosUtilizadores;
  CREATE TABLE ResultadosSubmetidoPelosUtilizadores (
