@@ -86,6 +86,8 @@ CREATE TABLE ApostasPodio (
     TerceiroClassificado CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     QuartoClassificado   CHAR(3) NULL REFERENCES Equipas (NomeCurto),
     MelhorMarcador       VARCHAR(255) NULL,
+    DataHoraAposta       TIMESTAMP,
+    AlteradoEntreFases   INT DEFAULT (0)
   PRIMARY KEY (Campeonato, Utilizador)
 );
 
@@ -151,12 +153,26 @@ FROM Jogos AS a
 INNER JOIN ApostasJogos AS b ON a.JogoId = b.JogoId
 ;
 
-# CREATE VIEW ApostasPodioComPontosCalculados AS
-# SELECT
-#   b.Utilizador
-# FROM
-# 
-# 
+DROP VIEW IF EXISTS ApostasPodioComPontosCalculados;
+CREATE VIEW ApostasPodioComPontosCalculados AS
+SELECT
+   a.Utilizador,
+(
+	( CASE WHEN a.PrimeiroClassificado = b.PrimeiroClassificado THEN 12 WHEN a.PrimeiroClassificado IN (b.SegundoClassificado,b.TerceiroClassificado,b.QuartoClassificado) THEN 6 ELSE 0 END)
+	+
+	( CASE WHEN a.SegundoClassificado  = b.SegundoClassificado  THEN 12 WHEN a.SegundoClassificado IN (b.PrimeiroClassificado,b.TerceiroClassificado,b.QuartoClassificado) THEN 6 ELSE 0 END)
+	+
+	( CASE WHEN a.TerceiroClassificado = b.TerceiroClassificado THEN 12 WHEN a.TerceiroClassificado IN (b.PrimeiroClassificado,b.SegundoClassificado,b.QuartoClassificado) THEN 6 ELSE 0 END)
+	+
+	( CASE WHEN a.QuartoClassificado   = b.QuartoClassificado   THEN 12 WHEN a.QuartoClassificado IN (b.PrimeiroClassificado,b.SegundoClassificado,b.TerceiroClassificado) THEN 6 ELSE 0 END)
+	+
+	( CASE WHEN a.MelhorMarcador       = b.MelhorMarcador       THEN 12 ELSE 0 END)
+) * ( 1 - 0.5 * a.AlteradoEntreFases) Pontos
+FROM ApostasPodio a
+CROSS JOIN Campeonatos b
+;
+
+
 DROP VIEW IF EXISTS Ranking;
 CREATE VIEW Ranking AS
 SELECT 
@@ -166,7 +182,7 @@ SELECT
     WHEN c.Boosts = 2 THEN CONCAT(b.NomeLongo, " (b) (b)") 
     ELSE b.NomeLongo 
   END) Utilizador, 
-  SUM(a.Pontos) as Pontos
+  SUM(a.Pontos) + CAST(d.Pontos AS INT) as Pontos
 FROM ApostasJogosComPontosCalculados a
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
 LEFT JOIN (SELECT COUNT(*) Boosts, a.Utilizador FROM ApostasJogos a INNER JOIN Jogos b ON a.JogoId = b.JogoId and b.Estado = "Disputado" WHERE a.Boost = 1 GROUP BY a.Utilizador) c ON c.Utilizador = a.Utilizador
