@@ -96,7 +96,7 @@
 				</tr>
 			<?php endforeach;?>
 			<tr>
-				<td colspan="2">
+				<td colspan="5">
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Jogos" />
 						<input type="hidden" name="_operation" value="insert" />
