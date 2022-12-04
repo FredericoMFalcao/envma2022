@@ -30,6 +30,12 @@
 			<td><?=$Utilizador?></td>
 		</tr>
 	<?php endforeach;?>
+	<?php foreach(select(["b.NomeLongo Utilizador","a.IndiceApostaIsolada"],"BadgesIndiceApostaIsolada a", "INNER JOIN Utilizadores b ON a.Utilizador = b.Utilizador ORDER BY a.IndiceApostaIsolada ASC LIMIT 1") as $row) : extract($row); ?>
+		<tr>
+			<td>Average Joe (menor indice de apostas isoladas)</td>
+			<td><?=$Utilizador?></td>
+		</tr>
+	<?php endforeach;?>
 
 </tbody>
 </table>
