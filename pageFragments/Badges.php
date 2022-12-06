@@ -36,7 +36,7 @@
 			<td><?=$Utilizador?></td>
 		</tr>
 	<?php endforeach;?>
-	<?php foreach(select(["c.NomeLongo Utilizador","AVG(b.DataHoraUTC - a.DataHoraAposta) AntecipacaoDaAposta"],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId INNER JOIN Utilizadores c ON c.Utilizador = a.Utilizador GROUP BY a.Utilizador ORDER BY AVG(b.DataHoraUTC - a.DataHoraAposta) DESC LIMIT 1") as $row) : extract($row); ?>
+	<?php foreach(select(["c.NomeLongo Utilizador","AVG(b.DataHoraUTC - a.DataHoraAposta) AntecipacaoDaAposta"],"ApostasJogos a", "INNER JOIN Jogos b ON a.JogoId = b.JogoId INNER JOIN Utilizadores c ON c.Utilizador = a.Utilizador GROUP BY a.Utilizador ORDER BY AVG(b.DataHoraUTC - a.DataHoraAposta) ASC LIMIT 1") as $row) : extract($row); ?>
 		<tr>
 			<td>Impulsive (menor tempo médio entre data do jogo e da aposta)</td>
 			<td><?=$Utilizador?></td>
