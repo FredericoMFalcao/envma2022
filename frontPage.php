@@ -37,13 +37,20 @@
 	
 	<h2 id="Ranking">Ranking</h2>
 	<?php require __DIR__."/pageFragments/Ranking.php"; ?>
+	
+	<hr/>
 
 	<h2 id="Badges">Badges</h2>
 	<?php require __DIR__."/pageFragments/Badges.php"; ?>
-
+	
+	<hr/>
 
 	<h2 id="DadosPessoais">Dados Pessoais</h2>
 	<?php require __DIR__."/pageFragments/DadosPessoais.php"; ?>
+	
+	<hr/>
+	
+	Código: <a href="https://github.com/FredericoMFalcao/envma2022">github</a>
 	
 </body>
 </html>

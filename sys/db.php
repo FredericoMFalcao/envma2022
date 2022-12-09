@@ -11,18 +11,35 @@ function escapeStrings(&$array) {
 			$array[$k] = "'".str_replace("'","''", $v)."'";
 	return $array;
 }
+/*
+*  REST API - GET / SELECT
+*  ex: GET http://envma2022.duckdns.org/api/Utilizadores?WHERE=Utilizador%2025
+*
+*/
 function select($cols, $tblName, $extra = "") {
 	global $db;
 	$stmt = $db->prepare("SELECT ".implode(", ", $cols)." FROM $tblName $extra");
 	$stmt->execute();
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+/*
+* REST API - POST / INSERT
+* ex: POST http://envma2022.duckdns.org/api/Jogos
+*
+* POST ARRAY = ....
+*/
 function insert($cols, $tblName) {
 	global $db;
 	$stmt = $db->prepare("INSERT INTO $tblName (".implode(", ", array_keys($cols)).") VALUES (".implode(", ",escapeStrings(array_values($cols))).")");
 	
 	return $stmt->execute();
 }
+/*
+* REST API - POST / UPDATE
+* ex: POST http://envma2022.duckdns.org/api/Jogos?WHERE=JogoId%2025
+*
+* POST ARRAY = ....
+*/
 function update(array $cols, string $tblName, array $where) {
 	global $db;
 	escapeStrings($cols);
@@ -41,6 +58,11 @@ function update(array $cols, string $tblName, array $where) {
 	$stmt = $db->prepare($query);
 	return $stmt->execute();
 }
+/*
+* REST API - DELETE / DELETE
+* ex: DELETE http://envma2022.duckdns.org/api/Jogos?WHERE=JogoId%2025
+*
+*/
 function delete($where, $tblName) {
 	global $db;
 	$stmt = $db->prepare("DELETE FROM $tblName  WHERE "
@@ -50,6 +72,13 @@ function delete($where, $tblName) {
 	
 	return $stmt->execute();
 }
+/*
+*  if currentUser <> "admin" then add  $_POST["Utilizador"] = currentUtilizador
+*
+*/
+
+
+
 
 
 
