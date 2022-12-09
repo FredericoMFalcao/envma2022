@@ -1,1 +1,1 @@
-<?php require_once "frontPage.php";
+<?php require_once __DIR__."/frontend/frontPage.php";
