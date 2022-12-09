@@ -2,7 +2,7 @@
 <?php require_once __DIR__."/pageFragments/pageHeader.php"; ?>
 	
 	<h1><?=$_GET["UtilizadorSigla"]?></h1>
-	<table>
+	<table border="1">
 		<thead>
 			<tr>
 				<th>Jogo</th>
