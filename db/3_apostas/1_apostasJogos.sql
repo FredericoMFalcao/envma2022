@@ -44,12 +44,26 @@ INNER JOIN ApostasJogos AS b ON a.JogoId = b.JogoId
 
 DROP VIEW IF EXISTS vApostasJogos;
 CREATE VIEW vApostasJogos AS 
-SELECT a.Utilizador UtilizadorSigla, b.NomeLongo NomeLongo, a.JogoId, d.NomeLongo EqCasa, e.NomeLongo EqFora, a.Fase, c.GolosEqCasa ResultadoEqCasa, c.GolosEqFora ResultadoEqFora, a.Boost, a.GolosEqCasa ApostaGolosEqCasa, a.GolosEqFora ApostaGolosEqFora, a.DataHoraAposta 
+SELECT 
+	a.Utilizador UtilizadorSigla, 
+	b.NomeLongo NomeLongo, 
+	a.JogoId, 
+	d.NomeLongo EqCasa, 
+	e.NomeLongo EqFora, 
+	a.Fase, 
+	c.GolosEqCasa ResultadoEqCasa, 
+	c.GolosEqFora ResultadoEqFora, 
+	a.Boost, 
+	a.GolosEqCasa ApostaGolosEqCasa, 
+	a.GolosEqFora ApostaGolosEqFora, 
+	a.DataHoraAposta,
+	f.Pontos Pontos 
 FROM `ApostasJogos` a 
 INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
 INNER JOIN Jogos c ON c.JogoId = a.JogoId
 INNER JOIN Equipas d ON d.NomeCurto = c.EquipaCasa
 INNER JOIN Equipas e ON e.NomeCurto = c.EquipaFora
+INNER JOIN ApostasJogosComPontosCalculados f ON f.JogoId = a.JogoId
 WHERE c.Estado <> "ApostasAbertas"
 ;
 
