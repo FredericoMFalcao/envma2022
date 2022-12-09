@@ -1,5 +1,5 @@
 <?php foreach(select(["JogoId","a.NomeLongo EquipaCasa","b.NomeLongo EquipaFora","GolosEqCasa","GolosEqFora","DataHoraUTC","Estado","Fase", "(CASE WHEN DAY(DataHoraUTC) = DAY(NOW()) AND MONTH(DataHoraUTC) = MONTH(NOW()) AND YEAR(DataHoraUTC) = YEAR(NOW()) THEN 1 ELSE 0 END) Hoje"],
-		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY JogoId ASC"
+		"Jogos INNER JOIN Equipas a ON a.NomeCurto = EquipaCasa INNER JOIN Equipas b ON b.NomeCurto = EquipaFora  ORDER BY DataHoraUTC ASC"
 			) as $Jogo) : ?>
 		
 <?php if ($Jogo["Hoje"] == 1 && !isset($TagHojeJaImpresso)) : $TagHojeJaImpresso = 1; ?>
