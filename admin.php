@@ -27,6 +27,7 @@
 			<?php endforeach;?>
 			<tr>
 				<td colspan="3">
+					<?php /* in the future : printNewEntryFormForSqlTable("Utilizador"); */ ?>
 					<form action="" method="POST">
 						<input type="hidden" name="_table" value="Utilizador" />
 						<input type="hidden" name="_operation" value="insert" />

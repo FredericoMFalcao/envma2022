@@ -1,9 +1,5 @@
 <?php require_once __DIR__."/sys/db.php"; ?>
-<html>
-<head>
-	<title>ENVMA 2022</title>
-</head>
-<body>
+<?php require_once __DIR__."/pageFragments/pageHeader.php"; ?>
 	
 	<h1>ENVMA 2022</h1>
 	<h5>- <?=$currentUserData["NomeLongo"]?></h5>
@@ -48,9 +44,6 @@
 	<h2 id="DadosPessoais">Dados Pessoais</h2>
 	<?php require __DIR__."/pageFragments/DadosPessoais.php"; ?>
 	
-	<hr/>
 	
-	Código: <a href="https://github.com/FredericoMFalcao/envma2022">github</a>
-	
-</body>
-</html>
+
+<?php require_once __DIR__."/pageFragments/pageFooter.php"; ?>
