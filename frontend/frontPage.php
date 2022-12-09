@@ -1,4 +1,4 @@
-<?php require_once __DIR__."/sys/db.php"; ?>
+<?php require_once __DIR__."/../sys/db.php"; ?>
 <?php require_once __DIR__."/pageFragments/pageHeader.php"; ?>
 	
 	<h1>ENVMA 2022</h1>
