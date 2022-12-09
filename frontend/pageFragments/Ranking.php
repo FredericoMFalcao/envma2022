@@ -6,9 +6,9 @@
 		</tr>
 	</thead>
 <tbody>
-	<?php foreach(select(["Utilizador","Pontos"],"Ranking") as $row) : extract($row); ?>
+	<?php foreach(select(["UtilizadorNomeCurto","Utilizador","Pontos"],"Ranking") as $row) : extract($row); ?>
 		<tr>
-			<td><?=$Utilizador?></td>
+			<td><a href="/porUtilizador.php?UtilizadorSigla=<?=$UtilizadorNomeCurto?>"><?=$Utilizador?></a></td>
 			<td><?=$Pontos?></td>
 		</tr>
 	<?php endforeach;?>
