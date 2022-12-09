@@ -12,7 +12,7 @@
 				<th>Data Aposta</th>
 		</thead>
 		<tbody>
-			<?php foreach(select(["EqCasa","EqFora","Fase","ResultadoEqCasa","ResultadoEqFora","Pontos","DataHoraAposta","Boost"],"vApostasJogos","WHERE UtilizadorSigla = '{$_GET['UtilizadorSigla']}'") as $row) :  extract($row);?>
+			<?php foreach(select(["EqCasa","EqFora","Fase","ResultadoEqCasa","ResultadoEqFora","Pontos","DataHoraAposta","Boost","ApostaGolosEqCasa","ApostaGolosEqFora"],"vApostasJogos","WHERE UtilizadorSigla = '{$_GET['UtilizadorSigla']}'") as $row) :  extract($row);?>
 				<tr>
 					<td><?=$EqCasa?> - <?=$EqFora?> (<?=$ResultadoEqCasa?> - <?=$ResultadoEqFora?>)</td>
 					<td><?=$Fase?></td>

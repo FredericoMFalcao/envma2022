@@ -63,8 +63,9 @@ INNER JOIN Utilizadores b ON b.Utilizador = a.Utilizador
 INNER JOIN Jogos c ON c.JogoId = a.JogoId
 INNER JOIN Equipas d ON d.NomeCurto = c.EquipaCasa
 INNER JOIN Equipas e ON e.NomeCurto = c.EquipaFora
-INNER JOIN ApostasJogosComPontosCalculados f ON f.JogoId = a.JogoId
+INNER JOIN ApostasJogosComPontosCalculados f ON f.JogoId = a.JogoId AND f.Utilizador = a.Utilizador
 WHERE c.Estado <> "ApostasAbertas"
+ORDER BY c.DataHoraUTC ASC
 ;
 
 
