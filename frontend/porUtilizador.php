@@ -1,7 +1,7 @@
 <?php require_once __DIR__."/../sys/db.php"; ?>
 <?php require_once __DIR__."/pageFragments/pageHeader.php"; ?>
 	
-	<h1><?=$_GET["nome"]?></h1>
+	<h1><?=$_GET["UtilizadorSigla"]?></h1>
 	<table>
 		<thead>
 			<tr>
@@ -12,7 +12,7 @@
 				<th>Data Aposta</th>
 		</thead>
 		<tbody>
-			<?php foreach(select(["EqCasa","EqFora","Fase","ResultadoEqCasa","ResultadoEqFora","Pontos","DataHoraAposta","Boost"],"vApostasJogos","WHERE Utilizador = '{$_GET['nome']}'") as $row) :  extract($row);?>
+			<?php foreach(select(["EqCasa","EqFora","Fase","ResultadoEqCasa","ResultadoEqFora","Pontos","DataHoraAposta","Boost"],"vApostasJogos","WHERE UtilizadorSigla = '{$_GET['UtilizadorSigla']}'") as $row) :  extract($row);?>
 				<tr>
 					<td><?=$EqCasa?> - <?=$EqFora?> (<?=$ResultadoEqCasa?> - <?=$ResultadoEqFora?>)</td>
 					<td><?=$Fase?></td>
