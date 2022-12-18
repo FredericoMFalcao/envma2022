@@ -45,10 +45,11 @@
 			<th>Terceiro Classificado</th>
 			<th>Quarto Classificado</th>
 			<th>Melhor Marcador</th>
+			<th>Pontos</th>
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach(select(["b.NomeLongo Utilizador","a.PrimeiroClassificado","a.SegundoClassificado","a.TerceiroClassificado","a.QuartoClassificado","a.MelhorMarcador","a.AlteradoEntreFases AlteradoEntreFases"],"ApostasPodio a","INNER JOIN Utilizadores b ON a.Utilizador = b.Utilizador") as $row): extract($row); ?>
+	<?php foreach(select(["b.NomeLongo Utilizador","a.PrimeiroClassificado","a.SegundoClassificado","a.TerceiroClassificado","a.QuartoClassificado","a.MelhorMarcador","a.AlteradoEntreFases AlteradoEntreFases","c.Pontos Pontos"],"ApostasPodio a","INNER JOIN Utilizadores b ON a.Utilizador = b.Utilizador INNER JOIN ApostasPodioComPontosCalculados c ON c.Utilizador = a.Utilizador") as $row): extract($row); ?>
 		<tr>
 			<td><?=$Utilizador?><?=($AlteradoEntreFases?" (a)":"")?></td>
 			<td><?=$PrimeiroClassificado?></td>
@@ -56,6 +57,7 @@
 			<td><?=$TerceiroClassificado?></td>
 			<td><?=$QuartoClassificado?></td>
 			<td><?=$MelhorMarcador?></td>
+			<td><?=$Pontos?></td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
