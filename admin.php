@@ -122,7 +122,6 @@
 	<h2>Apostas Jogos (algo)</h2>
 	<form action="" method="POST">
 		<input type="hidden" name="_table" value="APP_DEV_Views" />
-		<input type="hidden" name="_operation" value="update" />
 		<input type="hidden" name="_pk_Name" value="ApostasJogosComPontosCalculados">
 		
 		<textarea id="ApostasJogosComPontosCalculados_SqlCode" name="Code"><?=select(["Code"],"APP_DEV_Views","WHERE Name = 'ApostasJogosComPontosCalculados'")[0]["Code"]?></textarea>
