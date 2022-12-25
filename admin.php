@@ -2,6 +2,11 @@
 <html>
 <head>
 	<title>ENVMA 2022 - admin</title>
+	
+	<link  href="css/codemirror.css" rel="stylesheet">
+	<script src="js/codemirror.js"></script>
+	<script src="js/sql.js"></script>
+	
 </head>
 <body>
 <?php if ($currentUserIsAdmin) : ?>
@@ -114,6 +119,21 @@
 
 	<hr/>
 	
+	<h2>Apostas Jogos (algo)</h2>
+	<form action="" method="POST">
+		<input type="hidden" name="_table" value="APP_DEV_Views" />
+		<input type="hidden" name="_operation" value="update" />
+		<input type="hidden" name="_pk_Name" value="ApostasJogosComPontosCalculados">
+		
+		<textarea id="ApostasJogosComPontosCalculados_SqlCode" name="Code"><?=select(["Code"],"APP_DEV_Views","WHERE Name = 'ApostasJogosComPontosCalculados'")[0]["Code"]?></textarea>
+		<input type="submit" value="Submeter">
+	</form>
+	<hr/>
+
+	<h2>Apostas Pódio (algo)</h2>
+	<hr/>
+
+	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea("ApostasJogosComPontosCalculados_SqlCode",{lineNumbers:true,mode:"sql"});</script>
 <?php endif; ?>
 </body>
 </html>
