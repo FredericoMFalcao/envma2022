@@ -132,7 +132,7 @@
 	<h2>Apostas Pódio (algo)</h2>
 	<hr/>
 
-	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea("ApostasJogosComPontosCalculados_SqlCode",{lineNumbers:true,mode:"sql"});</script>
+	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});</script>
 <?php endif; ?>
 </body>
 </html>
