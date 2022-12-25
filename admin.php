@@ -141,7 +141,7 @@
 	<hr/>
 
 	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});
-		     var ApostasPodioComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});
+		     var ApostasPodioComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasPodioComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});
 	 </script>
 <?php endif; ?>
 </body>

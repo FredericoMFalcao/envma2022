@@ -38,7 +38,8 @@ SELECT
 	( CASE WHEN a.QuartoClassificado   = b.QuartoClassificado   THEN 12 WHEN a.QuartoClassificado IN (b.PrimeiroClassificado,b.SegundoClassificado,b.TerceiroClassificado) THEN 6 ELSE 0 END)
 	+
 	( CASE WHEN a.MelhorMarcador       = b.MelhorMarcador       THEN 12 ELSE 0 END)
-) * ( 1 - 0.5 * a.AlteradoEntreFases) Pontos
+  ) * ( 1 - 0.5 * a.AlteradoEntreFases
+) Pontos
 FROM ApostasPodio a
 CROSS JOIN Campeonatos b
 ;
