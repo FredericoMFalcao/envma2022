@@ -3,9 +3,9 @@
 <head>
 	<title>ENVMA 2022 - admin</title>
 	
-	<link  href="css/codemirror.css" rel="stylesheet">
-	<script src="js/codemirror.js"></script>
-	<script src="js/sql.js"></script>
+	<link  href="frontend/css/codemirror.css" rel="stylesheet">
+	<script src="frontend/js/codemirror.js"></script>
+	<script src="frontend/js/sql.js"></script>
 	
 </head>
 <body>
