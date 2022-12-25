@@ -130,9 +130,19 @@
 	<hr/>
 
 	<h2>Apostas Pódio (algo)</h2>
+	<form action="" method="POST">
+		<input type="hidden" name="_table" value="APP_DEV_Views" />
+		<input type="hidden" name="_pk_Name" value="ApostasPodioComPontosCalculados">
+		
+		<textarea id="ApostasPodioComPontosCalculados_SqlCode" name="Code"><?=select(["Code"],"APP_DEV_Views","WHERE Name = 'ApostasPodioComPontosCalculados'")[0]["Code"]?></textarea>
+		<input type="submit" value="Submeter">
+	</form>
+
 	<hr/>
 
-	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});</script>
+	 <script>var ApostasJogosComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});
+		     var ApostasPodioComPontosCalculados_textArea = CodeMirror.fromTextArea(ApostasJogosComPontosCalculados_SqlCode,{lineNumbers:true,mode:"sql"});
+	 </script>
 <?php endif; ?>
 </body>
 </html>
